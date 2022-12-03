@@ -7,6 +7,12 @@
 
 
     <div class="container-fluid">
+        <div class="row">
+            <div class="">
+                <img src="./images/home.jpeg" alt="home background image">
+                    <p class="carousel-caption" style="top: 12%; color: chocolate; font-size: larger">The leading home rental and booking platform in USA</p>
+            </div>
+        </div>
     </div>
 
 <jsp:include page="footer.jsp" />

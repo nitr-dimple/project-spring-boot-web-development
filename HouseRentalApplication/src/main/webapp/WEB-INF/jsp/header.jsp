@@ -16,21 +16,24 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">HouseRental</a>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li class=""><a href="#">Explore</a></li>
+        <li class="active"><a href="${pageContext.request.contextPath}/">Home</a></li>
+        <li class="nav-item"><a  href="#">Explore</a></li>
         <c:if test="${sessionScope['username'] != null}" >
-          <li class=""><a href="#"> <c:out value="${sessionScope['username']}"></c:out> </a></li>
-          <li class=""><a href="${pageContext.request.contextPath}/user/logout.htm">Logout</a></li>
+          <li class="nav-item"><a href="#"> <c:out value="${sessionScope['username'].getFullname()}"></c:out> </a></li>
+          <c:if test="${sessionScope['username'].getUsertype().equals('owner')}">
+            <li class="nav-item"><a href="${pageContext.request.contextPath}/user/addPost.htm"">Add Post</a></li>
+          </c:if>
+          <li class="nav-item"><a href="${pageContext.request.contextPath}/user/logout.htm">Logout</a></li>
         </c:if>
         <c:if test="${sessionScope['username'] == null}" >
-          <li class=""><a href="${pageContext.request.contextPath}/user/login.htm">Login</a></li>
-          <li class=""><a href="${pageContext.request.contextPath}/user/add.htm">Register</a></li>
+          <li class="nav-item"><a href="${pageContext.request.contextPath}/user/login.htm">Login</a></li>
+          <li class="nav-item"><a href="${pageContext.request.contextPath}/user/add.htm">Register</a></li>
         </c:if>
       </ul>
     </div>

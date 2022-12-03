@@ -3,9 +3,8 @@
 <jsp:include page="header.jsp" />
 
 <div class="container-fluid">
-    <c:if test="${requestScope.error}">
-        <h2 style="text-align: center"> ${requestScope.error} </h2>
-    </c:if>
+    <br>
+    <br>
     <form:form modelAttribute="user" method="POST">
         <h2 align="center"> Please Login </h2>
 

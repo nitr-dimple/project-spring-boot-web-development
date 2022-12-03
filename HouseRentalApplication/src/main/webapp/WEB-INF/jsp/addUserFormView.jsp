@@ -2,6 +2,8 @@
 <jsp:include page="header.jsp" />
 <br>
 <div class="container-fluid">
+    <br>
+    <br>
     <div class="col-xs-12 col-sm-12">
         <form:form modelAttribute="user" method="POST" class="form-horizontal">
             <fieldset>

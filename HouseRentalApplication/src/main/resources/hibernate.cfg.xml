@@ -11,7 +11,8 @@
 
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-<!--        <mapping resource="User.hbm.xml"/>-->
         <mapping class="com.neu.dimple.houserentalapplication.pojo.User" />
+        <mapping class="com.neu.dimple.houserentalapplication.pojo.Residence" />
+
     </session-factory>
 </hibernate-configuration>

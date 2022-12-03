@@ -43,7 +43,6 @@ public class UserDAO extends DAO{
             return user;
         } catch (HibernateException e) {
             rollback();
-            //throw new AdException("Could not create user " + username, e);
             throw new UserException("Exception while creating user: " + e.getMessage());
         }
     }
@@ -57,7 +56,6 @@ public class UserDAO extends DAO{
 
         } catch (HibernateException e) {
             rollback();
-            //throw new AdException("Could not create user " + username, e);
             throw new UserException("Exception while deleting user: " + e.getMessage());
         }
     }

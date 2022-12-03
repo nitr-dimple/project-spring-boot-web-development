@@ -68,8 +68,8 @@ public class UserLoginController {
             return "loginview";
         }
 
-        session.setAttribute("username", user1.getFullname());
+        session.setAttribute("username", user1);
 
-        return "addUserSuccessView";
+        return "welcome";
     }
 }
