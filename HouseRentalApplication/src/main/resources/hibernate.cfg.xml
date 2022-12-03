@@ -13,6 +13,7 @@
 
         <mapping class="com.neu.dimple.houserentalapplication.pojo.User" />
         <mapping class="com.neu.dimple.houserentalapplication.pojo.Residence" />
+        <mapping class="com.neu.dimple.houserentalapplication.pojo.ResidencePhoto" />
 
     </session-factory>
 </hibernate-configuration>

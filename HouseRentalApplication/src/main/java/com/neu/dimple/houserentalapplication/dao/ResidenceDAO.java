@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -35,16 +36,16 @@ public class ResidenceDAO extends DAO{
         }
     }
 
-    public Residence get(UUID id) throws UserException {
+    public List<Residence> getAllResidence(UUID id) throws UserException {
         try {
 
             begin();
-            Query q = getSession().createQuery("from Residence where id= :id");
+            Query q = getSession().createQuery("from Residence where userId= :id");
             q.setParameter("id", id);
-            Residence residence = (Residence) q.uniqueResult();
+            List<Residence> residences = q.list();
 
             commit();
-            return residence;
+            return residences;
 
         } catch (HibernateException e) {
             rollback();

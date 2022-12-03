@@ -96,6 +96,6 @@ public class Residence {
 
     @Override
     public String toString() {
-        return  residencename +", " + state + ", " + city + ", " + state + ", " + zipcode;
+        return  residencename +", " + street + ", " + city + ", " + state + ", " + zipcode;
     }
 }
