@@ -30,7 +30,6 @@ public class UserDAO extends DAO{
             rollback();
             throw new UserException("Could not create user " + email, e);
         }
-
     }
     public User create(User user) throws UserException {
         try {

@@ -28,7 +28,6 @@ public class ResidenceDAO extends DAO{
             getSession().save(residence);
             commit();
             close();
-
             return residence;
         } catch (HibernateException e) {
             rollback();
@@ -38,7 +37,6 @@ public class ResidenceDAO extends DAO{
 
     public List<Residence> getAllResidence(UUID id) throws UserException {
         try {
-
             begin();
             Query q = getSession().createQuery("from Residence where userId= :id");
             q.setParameter("id", id);
@@ -51,7 +49,19 @@ public class ResidenceDAO extends DAO{
             rollback();
             throw new UserException("Cound not find residence with id " + id, e);
         }
+    }
 
+    public void deleteResidence(UUID id) throws ResidenceException {
+        try {
+            begin();
+            Query q = getSession().createQuery("delete Residence where id= :id");
+            q.setParameter("id", id);
+            q.executeUpdate();
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new ResidenceException("Could not delete residence", e);
+        }
     }
 
 }

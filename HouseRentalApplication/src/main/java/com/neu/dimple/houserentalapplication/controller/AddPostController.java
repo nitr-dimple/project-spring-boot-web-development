@@ -13,6 +13,8 @@ import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import com.neu.dimple.houserentalapplication.validator.HouseValidator;
 import com.neu.dimple.houserentalapplication.validator.ResidenceValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,7 +28,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
@@ -55,6 +56,12 @@ public class AddPostController {
     @Autowired
     HouseDAO houseDAO;
 
+    @Autowired
+    ResidenceDAO residenceDAO;
+
+    Logger logger = LoggerFactory.getLogger(HouseController.class);
+
+
     @GetMapping("/user/addPost.htm")
     public String handleGet(ModelMap model, Residence residence, House house){
         model.addAttribute("residence", residence);
@@ -63,16 +70,17 @@ public class AddPostController {
     }
 
     @PostMapping("/user/addPost.htm")
-    public String handlePost( HttpSession session , @ModelAttribute("residence") Residence residence, @ModelAttribute("house") House house,BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
+    public String handlePost( HttpSession session , @ModelAttribute("residence") Residence residence, @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
+
+        logger.info("Reached: POSt /user/addPost.htm");
 
         String btnClicked = request.getParameter("btnClicked");
-        ResidenceDAO residenceDAO = new ResidenceDAO();
         User user = (User) session.getAttribute("username");
 
         if(btnClicked != null){
             request.setAttribute("btnClicked", btnClicked);
-            if(btnClicked.equals("Add Residence Photo") || btnClicked.equals("Add House")){
-                List<Residence> residenceList = new ArrayList<>();
+            if(btnClicked.equals("Add Residence Photo") || btnClicked.equals("Add House") || btnClicked.equals("Add House Photo")){
+                List<Residence> residenceList;
                 try{
                     residenceList = residenceDAO.getAllResidence(user.getId());
                 } catch (UserException e) {
@@ -81,31 +89,6 @@ public class AddPostController {
                 request.setAttribute("residenceList", residenceList);
             }
             return "addPost";
-        }
-
-        String addResidence = request.getParameter("addResidence");
-        if(addResidence != null){
-            residenceValidator.validate(residence, result);
-
-            if(result.hasErrors()){
-                request.setAttribute("btnClicked", "Add Residence");
-                return "addPost";
-            }
-
-            try{
-                residence.setUserId(user.getId());
-                residenceDAO.create(residence);
-            } catch (ResidenceException e) {
-                System.out.println("Exception: " +e.getMessage());
-            }
-
-            status.setComplete();
-
-            request.setAttribute("btnClicked", "Add Residence");
-            request.setAttribute("residenceAdded", "Successfully Added residence: " + residence.getResidencename());
-
-            return "addPost";
-
         }
 
         String addHouse = request.getParameter("addHouse");
@@ -162,6 +145,7 @@ public class AddPostController {
     public String handleResidnecePhotoPost(HttpSession session , @RequestParam("imagename") CommonsMultipartFile imagefile, HttpServletRequest request){
 
         String uploadResidencePhoto = request.getParameter("uploadResidencePhoto");
+        User user = (User) session.getAttribute("username");
 
         if(uploadResidencePhoto != null) {
             ResidencePhoto residencePhoto = new ResidencePhoto();
@@ -187,8 +171,39 @@ public class AddPostController {
             }
 
         }
+        List<Residence> residenceList = new ArrayList<>();
+        try{
+            residenceList = residenceDAO.getAllResidence(user.getId());
+        } catch (UserException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("residenceList", residenceList);
         request.setAttribute("btnClicked", "Add Residence Photo");
         request.setAttribute("uploadSuccess", "File Uploaded Successfully");
         return "addPost";
     }
+
+    @PostMapping("/user/viewPost.htm")
+    public String handleViewPost(HttpSession session , @ModelAttribute("residence") Residence residence, @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
+
+        String btnClicked = request.getParameter("btnClicked");
+        User user = (User) session.getAttribute("username");
+
+        if(btnClicked != null){
+            request.setAttribute("btnClicked", btnClicked);
+            if(btnClicked.equals("View Residence")){
+                List<Residence> residenceList;
+                try{
+                    residenceList = residenceDAO.getAllResidence(user.getId());
+                } catch (UserException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("residenceList", residenceList);
+            }
+            return "addPost";
+        }
+        return "addPost";
+    }
+
+
 }
