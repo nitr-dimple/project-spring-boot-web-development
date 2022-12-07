@@ -4,6 +4,7 @@ import com.neu.dimple.houserentalapplication.dao.HouseDAO;
 import com.neu.dimple.houserentalapplication.dao.HousePhotoDAO;
 import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
 import com.neu.dimple.houserentalapplication.exceptions.HouseException;
+import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.*;
 import com.neu.dimple.houserentalapplication.validator.HouseValidator;
@@ -103,10 +104,8 @@ public class HouseController {
 
                     }
                 }
-
                 request.setAttribute("housePhotos", housePhotos);
                 request.setAttribute("houseList", houseList);
-
             }
 
             return "addPost";
@@ -192,6 +191,61 @@ public class HouseController {
             logger.info("Successfully Added House: " + house.getHouseno());
             return "addPost";
         }
+        return "addPost";
+    }
+
+    @PostMapping("/user/deleteHouse.htm")
+    public String handleDelete(HttpSession session , @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
+
+        UUID houseDeleteId = UUID.fromString(request.getParameter("houseDeleteId"));
+        logger.info("Reached Delete /user/deleteHouse.htm: " + houseDeleteId);
+        User user = (User) session.getAttribute("username");
+        try{
+            houseDAO.deleteHouse(houseDeleteId);
+        } catch (HouseException e) {
+            System.out.println("Exception: " +e.getMessage());
+        }
+        status.setComplete();
+        request.setAttribute("btnClicked", "View House");
+
+        List<Residence> residenceList;
+        try{
+            residenceList = residenceDAO.getAllResidence(user.getId());
+        } catch (UserException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("residenceList", residenceList);
+
+        List<House> houseList = new ArrayList<>();
+        List<HousePhoto> housePhotos = new ArrayList<>();
+        for(Residence r: residenceList){
+            List<House> list;
+            try{
+                list = houseDAO.getHouseWithResidenceId(r.getId());
+            } catch (UserException e) {
+                throw new RuntimeException(e);
+            }
+
+            for(House h: list){
+                List<HousePhoto> housePhotoList;
+                houseList.add(h);
+                try{
+                    housePhotoList = housePhotoDAO.getAllHousePhotoWithHouseId(h.getId());
+                } catch (UserException e) {
+                    throw new RuntimeException(e);
+                }
+
+                for(HousePhoto hp: housePhotoList){
+                    housePhotos.add(hp);
+                }
+
+            }
+        }
+        request.setAttribute("housePhotos", housePhotos);
+        request.setAttribute("houseList", houseList);
+
+        request.setAttribute("houseDeleteSuccess", "Successfully Deleted House: " + houseDeleteId);
+        logger.info("House Deleted Successfully: " + houseDeleteId);
         return "addPost";
     }
 

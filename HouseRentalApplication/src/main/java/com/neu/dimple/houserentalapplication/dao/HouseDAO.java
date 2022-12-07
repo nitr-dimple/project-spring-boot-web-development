@@ -1,6 +1,7 @@
 package com.neu.dimple.houserentalapplication.dao;
 
 import com.neu.dimple.houserentalapplication.exceptions.HouseException;
+import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.House;
 import com.neu.dimple.houserentalapplication.pojo.User;
@@ -49,6 +50,19 @@ public class HouseDAO extends DAO{
         } catch (HibernateException e) {
             rollback();
             throw new UserException("Could not get house info " + id, e);
+        }
+    }
+
+    public void deleteHouse(UUID id) throws HouseException {
+        try {
+            begin();
+            Query q = getSession().createQuery("delete House where id= :id");
+            q.setParameter("id", id);
+            q.executeUpdate();
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new HouseException("Could not delete house", e);
         }
     }
 }
