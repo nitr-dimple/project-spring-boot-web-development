@@ -1,10 +1,12 @@
 package com.neu.dimple.houserentalapplication.controller;
 
 import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
+import com.neu.dimple.houserentalapplication.dao.ResidencePhotoDAO;
 import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.House;
 import com.neu.dimple.houserentalapplication.pojo.Residence;
+import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import com.neu.dimple.houserentalapplication.validator.ResidenceValidator;
 import org.slf4j.Logger;
@@ -37,6 +39,9 @@ public class ResidenceController {
     ResidenceValidator residenceValidator;
     @Autowired
     ResidenceDAO residenceDAO;
+
+    @Autowired
+    ResidencePhotoDAO residencePhotoDAO;
 
     @GetMapping("/user/addResidence.htm")
     public String handleGet(ModelMap model, Residence residence, HttpServletRequest request){
@@ -101,8 +106,81 @@ public class ResidenceController {
             throw new RuntimeException(e);
         }
         request.setAttribute("residenceList", residenceList);
+
+        List<ResidencePhoto> residencePhotos;
+        try{
+            residencePhotos = residencePhotoDAO.getAllResidencePhoto();
+        } catch (UserException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("residencePhotos", residencePhotos);
+
         request.setAttribute("residenceDeleteSuccess", "Successfully Deleted Residence: " + residenceDeleteId);
         logger.info("Residence Deleted Successfully: " + residenceDeleteId);
+        return "addPost";
+    }
+
+    @GetMapping("/user/updateResidence.htm")
+    public String handleGetUpdate(ModelMap model, Residence residence, HttpServletRequest request) throws UserException {
+
+        UUID residenceUpdateId = UUID.fromString(request.getParameter("residenceUpdateId"));
+        logger.info("Reached /user/updateResidence.htm: " + residenceUpdateId);
+
+        Residence updatedResidence = residenceDAO.getResidence(residenceUpdateId);
+        request.setAttribute("updatedResidence", updatedResidence);
+
+        model.addAttribute("residence", residence);
+        String btnClicked = request.getParameter("updateResidence");
+        request.setAttribute("btnClicked", btnClicked);
+        return "addPost";
+    }
+    @PostMapping("/user/updateResidence.htm")
+    public String handleUpdate(HttpSession session , @ModelAttribute("residence") Residence residence, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException, UserException {
+
+        logger.info("Reached /user/updateResidence.htm: " + residence);
+        UUID residenceUpdateId = UUID.fromString(request.getParameter("residenceUpdateId"));
+        residence.setId(residenceUpdateId);
+
+        User user = (User) session.getAttribute("username");
+
+        if(residenceUpdateId != null){
+            residenceValidator.validate(residence, result);
+
+            if(result.hasErrors()){
+                Residence updatedResidence = residenceDAO.getResidence(residenceUpdateId);
+                request.setAttribute("updatedResidence", updatedResidence);
+                request.setAttribute("btnClicked", "Update Residence");
+                return "addPost";
+            }
+            try{
+                residence.setUserId(user.getId());
+                residenceDAO.updateResidence(residence);
+            } catch (ResidenceException e) {
+                System.out.println("Exception: " +e.getMessage());
+            }
+            List<Residence> residenceList;
+            try{
+                residenceList = residenceDAO.getAllResidence(user.getId());
+            } catch (UserException e) {
+                throw new RuntimeException(e);
+            }
+            status.setComplete();
+            request.setAttribute("residenceList", residenceList);
+
+            List<ResidencePhoto> residencePhotos;
+            try{
+                residencePhotos = residencePhotoDAO.getAllResidencePhoto();
+            } catch (UserException e) {
+                throw new RuntimeException(e);
+            }
+            request.setAttribute("residencePhotos", residencePhotos);
+
+            request.setAttribute("btnClicked", "View Residence");
+            request.setAttribute("residenceUpdateSuccess", "Successfully Updated residence: " + residence.getResidencename());
+            logger.info("Residence Updated Successfully: " );
+
+            return "addPost";
+        }
         return "addPost";
     }
 

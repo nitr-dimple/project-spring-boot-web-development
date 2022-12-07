@@ -199,6 +199,14 @@ public class AddPostController {
                     throw new RuntimeException(e);
                 }
                 request.setAttribute("residenceList", residenceList);
+
+                List<ResidencePhoto> residencePhotos;
+                try{
+                    residencePhotos = residencePhotoDAO.getAllResidencePhoto();
+                } catch (UserException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("residencePhotos", residencePhotos);
             }
             return "addPost";
         }

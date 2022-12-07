@@ -2,10 +2,15 @@ package com.neu.dimple.houserentalapplication.dao;
 
 import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.ResidencePhotoException;
+import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.Residence;
 import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import org.hibernate.HibernateException;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Dimpleben Kanjibhai Patel
@@ -31,4 +36,36 @@ public class ResidencePhotoDAO extends DAO{
             throw new ResidencePhotoException("Exception while creating residence: " + e.getMessage());
         }
     }
+
+    public List<ResidencePhoto> getAllResidencePhotoWithResidenceId(UUID id) throws UserException {
+        try {
+            begin();
+            Query q = getSession().createQuery("from ResidencePhoto where residenceId= :id");
+            q.setParameter("id", id);
+            List<ResidencePhoto> residencePhotos = q.list();
+
+            commit();
+            return residencePhotos;
+
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException("Could not find residence photo with residence id " + id, e);
+        }
+    }
+
+    public List<ResidencePhoto> getAllResidencePhoto() throws UserException {
+        try {
+            begin();
+            List<ResidencePhoto> residencePhotos = getSession().createCriteria(ResidencePhoto.class).list();
+
+            commit();
+            return residencePhotos;
+
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException("Could not find residence photo with residence id " + e);
+        }
+    }
+
+
 }

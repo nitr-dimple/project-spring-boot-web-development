@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="">
-                <img src="./images/home.jpeg" alt="home background image">
+                <img src="<%=request.getContextPath()%>/images/home.jpeg" alt="home background image" style="width:100%;">
                     <p class="carousel-caption" style="top: 12%; color: chocolate; font-size: larger">The leading home rental and booking platform in USA</p>
             </div>
         </div>

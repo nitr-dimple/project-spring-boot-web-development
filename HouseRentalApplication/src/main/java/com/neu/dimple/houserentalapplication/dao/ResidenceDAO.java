@@ -47,10 +47,22 @@ public class ResidenceDAO extends DAO{
 
         } catch (HibernateException e) {
             rollback();
-            throw new UserException("Cound not find residence with id " + id, e);
+            throw new UserException("Could not find residence with id " + id, e);
         }
     }
 
+    public Residence getResidence(UUID id) throws UserException {
+        try {
+            begin();
+            Residence residence = getSession().get(Residence.class, id);;
+            commit();
+            return residence;
+
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException("Could not find residence with id " + id, e);
+        }
+    }
     public void deleteResidence(UUID id) throws ResidenceException {
         try {
             begin();
@@ -61,6 +73,17 @@ public class ResidenceDAO extends DAO{
         } catch (HibernateException e) {
             rollback();
             throw new ResidenceException("Could not delete residence", e);
+        }
+    }
+
+    public void updateResidence(Residence residence) throws ResidenceException {
+        try {
+            begin();
+            getSession().update(residence);
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new ResidenceException("Could not update residence", e);
         }
     }
 
