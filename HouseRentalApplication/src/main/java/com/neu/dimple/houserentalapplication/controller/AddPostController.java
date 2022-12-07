@@ -91,53 +91,7 @@ public class AddPostController {
             return "addPost";
         }
 
-        String addHouse = request.getParameter("addHouse");
-        if(addHouse != null){
-            System.out.println("inside addhouse");
-            houseValidator.validate(house, result);
-            String startdate = request.getParameter("startdate");
-            String enddate = request.getParameter("enddate");
 
-            if(result.hasErrors() || startdate == null || enddate == null || startdate.isEmpty() || enddate.isEmpty()){
-                request.setAttribute("btnClicked", "Add House");
-                List<Residence> residenceList = new ArrayList<>();
-                try{
-                    residenceList = residenceDAO.getAllResidence(user.getId());
-                } catch (UserException e) {
-                    throw new RuntimeException(e);
-                }
-                request.setAttribute("residenceList", residenceList);
-                if(startdate == null || startdate.isEmpty())
-                    request.setAttribute("startdateerror", "Please enter start date");
-                if(enddate == null || enddate.isEmpty())
-                    request.setAttribute("enddateerror", "Please enter end date");
-                return "addPost";
-            }
-
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            house.setStartdate(format.parse(startdate));
-            house.setEnddate(format.parse(enddate));
-
-            try{
-                houseDAO.create(house);
-            } catch (HouseException e) {
-                System.out.println("Exception: " +e.getMessage());
-            }
-
-            status.setComplete();
-            List<Residence> residenceList = new ArrayList<>();
-            try{
-                residenceList = residenceDAO.getAllResidence(user.getId());
-            } catch (UserException e) {
-                throw new RuntimeException(e);
-            }
-            request.setAttribute("residenceList", residenceList);
-
-            request.setAttribute("btnClicked", "Add House");
-            request.setAttribute("houseAdded", "Successfully Added House: " + house.getHouseno());
-            return "addPost";
-
-        }
         return "addPost";
     }
 

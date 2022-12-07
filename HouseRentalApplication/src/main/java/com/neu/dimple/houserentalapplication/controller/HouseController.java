@@ -6,11 +6,13 @@ import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
 import com.neu.dimple.houserentalapplication.exceptions.HouseException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.*;
+import com.neu.dimple.houserentalapplication.validator.HouseValidator;
 import org.hibernate.hql.internal.HolderInstantiator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +40,9 @@ public class HouseController {
 
     @Autowired
     HousePhotoDAO housePhotoDAO;
+
+    @Autowired
+    HouseValidator houseValidator;
 
     Logger logger = LoggerFactory.getLogger(HouseController.class);
 
@@ -107,4 +113,86 @@ public class HouseController {
         }
         return "addPost";
     }
+
+    @GetMapping("/user/addHouse.htm")
+    public String handleGet(HttpSession session , ModelMap model, Residence residence, House house, HttpServletRequest request){
+        logger.info("Reached GET /user/addHouse.htm: " + residence);
+
+        model.addAttribute("residence", residence);
+        model.addAttribute("house", house);
+        User user = (User) session.getAttribute("username");
+
+        String btnClicked = request.getParameter("btnClicked");
+
+        if(btnClicked != null){
+            if( btnClicked.equals("Add House") ){
+                request.setAttribute("btnClicked", btnClicked);
+                List<Residence> residenceList;
+                try{
+                    residenceList = residenceDAO.getAllResidence(user.getId());
+                } catch (UserException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("residenceList", residenceList);
+            }
+            return "addPost";
+        }
+        return "addPost";
+    }
+
+    @PostMapping("/user/addHouse.htm")
+    public String handleAddHousePost(HttpSession session , @ModelAttribute("residence") Residence residence, @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
+        logger.info("Reached POST /user/addHouse.htm: " + residence);
+
+        String addHouse = request.getParameter("addHouse");
+        User user = (User) session.getAttribute("username");
+
+        if(addHouse != null){
+            houseValidator.validate(house, result);
+            String startdate = request.getParameter("startdate");
+            String enddate = request.getParameter("enddate");
+
+            if(result.hasErrors() || startdate == null || enddate == null || startdate.isEmpty() || enddate.isEmpty()){
+                request.setAttribute("btnClicked", "Add House");
+                List<Residence> residenceList;
+                try{
+                    residenceList = residenceDAO.getAllResidence(user.getId());
+                } catch (UserException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("residenceList", residenceList);
+                if(startdate == null || startdate.isEmpty())
+                    request.setAttribute("startdateerror", "Please enter start date");
+                if(enddate == null || enddate.isEmpty())
+                    request.setAttribute("enddateerror", "Please enter end date");
+                return "addPost";
+            }
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            house.setStartdate(format.parse(startdate));
+            house.setEnddate(format.parse(enddate));
+
+            try{
+                houseDAO.create(house);
+            } catch (HouseException e) {
+                System.out.println("Exception: " +e.getMessage());
+            }
+
+            status.setComplete();
+            List<Residence> residenceList;
+            try{
+                residenceList = residenceDAO.getAllResidence(user.getId());
+            } catch (UserException e) {
+                throw new RuntimeException(e);
+            }
+            request.setAttribute("residenceList", residenceList);
+
+            request.setAttribute("btnClicked", "Add House");
+            request.setAttribute("houseAdded", "Successfully Added House: " + house.getHouseno());
+            logger.info("Successfully Added House: " + house.getHouseno());
+            return "addPost";
+        }
+        return "addPost";
+    }
+
 }
