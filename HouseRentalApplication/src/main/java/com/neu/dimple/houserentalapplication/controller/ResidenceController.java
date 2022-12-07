@@ -85,6 +85,36 @@ public class ResidenceController {
         return "addPost";
     }
 
+    @PostMapping("/user/viewResidence.htm")
+    public String handleViewPost(HttpSession session , @ModelAttribute("residence") Residence residence, @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
+
+        String btnClicked = request.getParameter("btnClicked");
+        User user = (User) session.getAttribute("username");
+
+        if(btnClicked != null){
+            request.setAttribute("btnClicked", btnClicked);
+            if(btnClicked.equals("View Residence")){
+                List<Residence> residenceList;
+                try{
+                    residenceList = residenceDAO.getAllResidence(user.getId());
+                } catch (UserException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("residenceList", residenceList);
+
+                List<ResidencePhoto> residencePhotos;
+                try{
+                    residencePhotos = residencePhotoDAO.getAllResidencePhoto();
+                } catch (UserException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("residencePhotos", residencePhotos);
+            }
+            return "addPost";
+        }
+        return "addPost";
+    }
+
     @PostMapping("/user/deleteResidence.htm")
     public String handleDelete(HttpSession session , @ModelAttribute("residence") Residence residence, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
 

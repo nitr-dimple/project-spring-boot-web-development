@@ -67,5 +67,18 @@ public class ResidencePhotoDAO extends DAO{
         }
     }
 
+    public void deleteResidencePhoto(UUID id) throws ResidenceException {
+        try {
+            begin();
+            Query q = getSession().createQuery("delete ResidencePhoto where id= :id");
+            q.setParameter("id", id);
+            q.executeUpdate();
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new ResidenceException("Could not delete residence photo", e);
+        }
+    }
+
 
 }

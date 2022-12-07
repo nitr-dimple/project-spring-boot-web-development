@@ -2,10 +2,15 @@ package com.neu.dimple.houserentalapplication.dao;
 
 import com.neu.dimple.houserentalapplication.exceptions.HousePhotoException;
 import com.neu.dimple.houserentalapplication.exceptions.ResidencePhotoException;
+import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.HousePhoto;
 import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import org.hibernate.HibernateException;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Dimpleben Kanjibhai Patel
@@ -28,6 +33,22 @@ public class HousePhotoDAO extends DAO{
         } catch (HibernateException e) {
             rollback();
             throw new HousePhotoException("Exception while adding house photo: " + e.getMessage());
+        }
+    }
+
+    public List<HousePhoto> getAllHousePhotoWithHouseId(UUID id) throws UserException {
+        try {
+            begin();
+            Query q = getSession().createQuery("from HousePhoto where houseId= :id");
+            q.setParameter("id", id);
+            List<HousePhoto> housePhotos = q.list();
+
+            commit();
+            return housePhotos;
+
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException("Could not find house photo with house id " + id, e);
         }
     }
 

@@ -21,6 +21,13 @@
         </div>
     </div>
 </c:if>
+<c:if test="${requestScope['residencePhotoDeleteSuccess'] != null}">
+    <div class="form-group">
+        <div class="col-xs-8">
+            <font color="green"><c:out value="${requestScope['residencePhotoDeleteSuccess']}" ></c:out> </font>
+        </div>
+    </div>
+</c:if>
 </br>
 
 <c:forEach var="residence" items="${requestScope['residenceList']}">

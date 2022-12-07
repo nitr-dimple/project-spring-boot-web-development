@@ -141,77 +141,7 @@ public class AddPostController {
         return "addPost";
     }
 
-    @PostMapping("/user/addResidencePhoto.htm")
-    public String handleResidnecePhotoPost(HttpSession session , @RequestParam("imagename") CommonsMultipartFile imagefile, HttpServletRequest request){
 
-        String uploadResidencePhoto = request.getParameter("uploadResidencePhoto");
-        User user = (User) session.getAttribute("username");
-
-        if(uploadResidencePhoto != null) {
-            ResidencePhoto residencePhoto = new ResidencePhoto();
-            UUID residenceId = UUID.fromString(request.getParameter("residence"));
-            residencePhoto.setResidenceId(residenceId);
-            String fileName = "img_" + System.currentTimeMillis() + "" + new Random().nextInt(100000000) + "" + new Random().nextInt(100000000) + ".jpg";
-            byte[] data = imagefile.getBytes();
-            String path = session.getServletContext().getRealPath("/")+ "images/"+fileName;
-            residencePhoto.setImagename(fileName);
-            try{
-                FileOutputStream fos = new FileOutputStream(path);
-                fos.write(data);
-                fos.close();
-                System.out.println("File Uploaded successfully");
-            }catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("File Upload error");
-            }
-            try{
-                residencePhotoDAO.create(residencePhoto);
-            }catch (ResidencePhotoException e){
-                System.out.println("Exception: " +e.getMessage());
-            }
-
-        }
-        List<Residence> residenceList = new ArrayList<>();
-        try{
-            residenceList = residenceDAO.getAllResidence(user.getId());
-        } catch (UserException e) {
-            throw new RuntimeException(e);
-        }
-        request.setAttribute("residenceList", residenceList);
-        request.setAttribute("btnClicked", "Add Residence Photo");
-        request.setAttribute("uploadSuccess", "File Uploaded Successfully");
-        return "addPost";
-    }
-
-    @PostMapping("/user/viewPost.htm")
-    public String handleViewPost(HttpSession session , @ModelAttribute("residence") Residence residence, @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
-
-        String btnClicked = request.getParameter("btnClicked");
-        User user = (User) session.getAttribute("username");
-
-        if(btnClicked != null){
-            request.setAttribute("btnClicked", btnClicked);
-            if(btnClicked.equals("View Residence")){
-                List<Residence> residenceList;
-                try{
-                    residenceList = residenceDAO.getAllResidence(user.getId());
-                } catch (UserException e) {
-                    throw new RuntimeException(e);
-                }
-                request.setAttribute("residenceList", residenceList);
-
-                List<ResidencePhoto> residencePhotos;
-                try{
-                    residencePhotos = residencePhotoDAO.getAllResidencePhoto();
-                } catch (UserException e) {
-                    throw new RuntimeException(e);
-                }
-                request.setAttribute("residencePhotos", residencePhotos);
-            }
-            return "addPost";
-        }
-        return "addPost";
-    }
 
 
 }

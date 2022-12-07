@@ -10,13 +10,20 @@
   <div style="width: 100%;" class="form-group">
     <div style="float: left; width: 20%; min-height:500px; margin-left: 50px;border:1px solid black; text-align: center ">
       <br>
-      <form method="post" action="${pageContext.request.contextPath}/user/viewPost.htm">
+      <form method="post" action="${pageContext.request.contextPath}/user/viewResidence.htm">
         <input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="View Residence" name="btnClicked"/>
       </form>
 
       <form method="post" action="${pageContext.request.contextPath}/user/addPost.htm">
         <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="Add Residence Photo" name="btnClicked"/></h2>
-        <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="Add House" name="btnClicked"/></h2>
+      </form>
+
+      <form method="post" action="${pageContext.request.contextPath}/user/viewHouse.htm">
+        <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="View House" name="btnClicked"/></h2>
+      </form>
+
+      <form method="post" action="${pageContext.request.contextPath}/user/addPost.htm">
+<%--        <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="Add House" name="btnClicked"/></h2>--%>
         <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="Add House Photo" name="btnClicked"/></h2>
       </form>
     </div>
@@ -37,61 +44,19 @@
         </c:if>
 
 
-<%--        If clicked on Add Residence      --%>
+<%--        If clicked on update Residence      --%>
         <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Update Residence')}">
           <jsp:include page="updateResidence.jsp" />
         </c:if>
 
 <%--        If click on Add Residence Photos   --%>
         <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Add Residence Photo')}">
-          <div class="col-xs-12 col-sm-12">
+          <jsp:include page="addResidencePhoto.jsp" />
+        </c:if>
 
-            <form method="POST" class="form-horizontal" enctype="multipart/form-data" action="${pageContext.request.contextPath}/user/addResidencePhoto.htm">
-              <fieldset>
-
-                <c:if test="${requestScope['uploadSuccess'] != null}">
-                  <div class="form-group">
-                    <div class="col-xs-8">
-                      <font color="green"><c:out value="${requestScope['uploadSuccess']}" ></c:out> </font>
-                    </div>
-                  </div>
-                </c:if>
-                <legend class="mt-1">Add Residence Photos</legend>
-
-                <div class="form-group">
-
-                  <div class="col-xs-3 text-right" style="padding-top: 6px">
-                    <label for="state">Select Residence:</label>
-                  </div>
-                  <div class="col-xs-9">
-                    <select  name="residence" class="form-control form-control-lg" id="residence">
-                      <c:forEach var="residence" items="${requestScope['residenceList']}">
-                        <option value="${residence.getId()}">
-                          <c:out value="${residence}"></c:out>
-                        </option>
-                      </c:forEach>
-                    </select>
-                  </div>
-
-                </div>
-
-                <div class="form-group">
-                  <div class="col-xs-3 text-right" style="padding-top: 6px">
-                    <label for="imagename">Upload Image:</label>
-                  </div>
-                  <div class="col-xs-9">
-                    <input type="file" name="imagename" class="form-control form-control-lg" id="imagename" required/>
-                  </div>
-                </div>
-
-                <div class="col-1 text-center">
-                  <input type="submit" value="Upload Residence" class="btn btn-primary" name="uploadResidencePhoto">
-                </div>
-
-              </fieldset>
-            </form>
-          </div>
-
+<%--        If clicked on View House      --%>
+        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('View House')}">
+          <jsp:include page="viewHouse.jsp" />
         </c:if>
 
 
