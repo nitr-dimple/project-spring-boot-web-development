@@ -95,7 +95,7 @@ public class HouseController {
                         houseList.add(h);
                         try{
                             housePhotoList = housePhotoDAO.getAllHousePhotoWithHouseId(h.getId());
-                        } catch (UserException e) {
+                        } catch (HouseException e) {
                             throw new RuntimeException(e);
                         }
 
@@ -232,7 +232,7 @@ public class HouseController {
                 houseList.add(h);
                 try{
                     housePhotoList = housePhotoDAO.getAllHousePhotoWithHouseId(h.getId());
-                } catch (UserException e) {
+                } catch (HouseException e) {
                     throw new RuntimeException(e);
                 }
 
@@ -352,7 +352,7 @@ public class HouseController {
                     houseList.add(h);
                     try{
                         housePhotoList = housePhotoDAO.getAllHousePhotoWithHouseId(h.getId());
-                    } catch (UserException e) {
+                    } catch (HouseException e) {
                         throw new RuntimeException(e);
                     }
 

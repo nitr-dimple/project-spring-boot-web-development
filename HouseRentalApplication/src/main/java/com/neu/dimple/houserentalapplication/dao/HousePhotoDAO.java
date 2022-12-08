@@ -1,8 +1,6 @@
 package com.neu.dimple.houserentalapplication.dao;
 
-import com.neu.dimple.houserentalapplication.exceptions.HousePhotoException;
-import com.neu.dimple.houserentalapplication.exceptions.ResidencePhotoException;
-import com.neu.dimple.houserentalapplication.exceptions.UserException;
+import com.neu.dimple.houserentalapplication.exceptions.*;
 import com.neu.dimple.houserentalapplication.pojo.HousePhoto;
 import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import org.hibernate.HibernateException;
@@ -36,7 +34,7 @@ public class HousePhotoDAO extends DAO{
         }
     }
 
-    public List<HousePhoto> getAllHousePhotoWithHouseId(UUID id) throws UserException {
+    public List<HousePhoto> getAllHousePhotoWithHouseId(UUID id) throws HouseException {
         try {
             begin();
             Query q = getSession().createQuery("from HousePhoto where houseId= :id");
@@ -48,7 +46,20 @@ public class HousePhotoDAO extends DAO{
 
         } catch (HibernateException e) {
             rollback();
-            throw new UserException("Could not find house photo with house id " + id, e);
+            throw new HouseException("Could not find house photo with house id " + id, e);
+        }
+    }
+
+    public void deleteHousePhoto(UUID id) throws HouseException {
+        try {
+            begin();
+            Query q = getSession().createQuery("delete HousePhoto where id= :id");
+            q.setParameter("id", id);
+            q.executeUpdate();
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new HouseException("Could not delete house photo", e);
         }
     }
 
