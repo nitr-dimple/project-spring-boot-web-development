@@ -4,6 +4,7 @@ import com.neu.dimple.houserentalapplication.exceptions.HouseException;
 import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.House;
+import com.neu.dimple.houserentalapplication.pojo.Residence;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
@@ -37,7 +38,7 @@ public class HouseDAO extends DAO{
         }
     }
 
-    public List<House> getHouseWithResidenceId(UUID id) throws UserException {
+    public List<House> getHouseWithResidenceId(UUID id) throws HouseException {
         try {
             begin();
             Query q = getSession().createQuery("from House where residenceId= :id");
@@ -49,7 +50,7 @@ public class HouseDAO extends DAO{
 
         } catch (HibernateException e) {
             rollback();
-            throw new UserException("Could not get house info " + id, e);
+            throw new HouseException("Could not get house info " + id, e);
         }
     }
 
@@ -63,6 +64,30 @@ public class HouseDAO extends DAO{
         } catch (HibernateException e) {
             rollback();
             throw new HouseException("Could not delete house", e);
+        }
+    }
+
+    public House getHouse(UUID id) throws HouseException {
+        try {
+            begin();
+            House house = getSession().get(House.class, id);;
+            commit();
+            return house;
+
+        } catch (HibernateException e) {
+            rollback();
+            throw new HouseException("Could not find house with id " + id, e);
+        }
+    }
+
+    public void updateHouse(House house) throws HouseException {
+        try {
+            begin();
+            getSession().update(house);
+            commit();
+        } catch (HibernateException e) {
+            rollback();
+            throw new HouseException("Could not update house", e);
         }
     }
 }

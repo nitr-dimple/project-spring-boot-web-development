@@ -164,6 +164,7 @@ public class ResidenceController {
         request.setAttribute("btnClicked", btnClicked);
         return "addPost";
     }
+
     @PostMapping("/user/updateResidence.htm")
     public String handleUpdate(HttpSession session , @ModelAttribute("residence") Residence residence, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException, UserException {
 

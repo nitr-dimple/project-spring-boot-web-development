@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,7 +55,7 @@ public class HouseController {
         List<House> houseList;
         try{
             houseList = houseDAO.getHouseWithResidenceId(id);
-        } catch (UserException e) {
+        } catch (HouseException e) {
             throw new RuntimeException(e);
         }
         logger.info("Successully fetched house data");
@@ -85,7 +86,7 @@ public class HouseController {
                     List<House> list;
                     try{
                         list = houseDAO.getHouseWithResidenceId(r.getId());
-                    } catch (UserException e) {
+                    } catch (HouseException e) {
                         throw new RuntimeException(e);
                     }
 
@@ -195,7 +196,7 @@ public class HouseController {
     }
 
     @PostMapping("/user/deleteHouse.htm")
-    public String handleDelete(HttpSession session , @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws ParseException {
+    public String handleDelete(HttpSession session , @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws HouseException {
 
         UUID houseDeleteId = UUID.fromString(request.getParameter("houseDeleteId"));
         logger.info("Reached Delete /user/deleteHouse.htm: " + houseDeleteId);
@@ -222,7 +223,7 @@ public class HouseController {
             List<House> list;
             try{
                 list = houseDAO.getHouseWithResidenceId(r.getId());
-            } catch (UserException e) {
+            } catch (HouseException e) {
                 throw new RuntimeException(e);
             }
 
@@ -249,4 +250,129 @@ public class HouseController {
         return "addPost";
     }
 
-}
+    @GetMapping("/user/updateHouse.htm")
+    public String handleGetUpdate(HttpSession session, ModelMap model, House house, Residence residence, HttpServletRequest request) throws HouseException, ParseException {
+
+        UUID houseeUpdateId = UUID.fromString(request.getParameter("houseeUpdateId"));
+        logger.info("Reached GET /user/updateHouse.htm: " + houseeUpdateId);
+        User user = (User) session.getAttribute("username");
+
+        House updatedHouse = houseDAO.getHouse(houseeUpdateId);
+        request.setAttribute("updatedHouse", updatedHouse);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = format.parse(updatedHouse.getStartdate().toString());
+        String startdate = format.format(date);
+        request.setAttribute("startdate", startdate);
+
+        date = format.parse(updatedHouse.getEnddate().toString());
+        String enddate = format.format(date);
+        request.setAttribute("enddate", enddate);
+
+        List<Residence> residenceList;
+        try{
+            residenceList = residenceDAO.getAllResidence(user.getId());
+        } catch (UserException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("residenceList", residenceList);
+
+        model.addAttribute("house", house);
+        model.addAttribute("residence", residence);
+
+        String btnClicked = request.getParameter("updateHouse");
+        request.setAttribute("btnClicked", btnClicked);
+        return "addPost";
+    }
+
+    @PostMapping("/user/updateHouse.htm")
+    public String handlePostUpdate(HttpSession session , @ModelAttribute("house") House house, BindingResult result, HttpServletRequest request, SessionStatus status) throws HouseException, ParseException {
+
+        logger.info("Reached /user/updateHouse.htm: " + house.getHouseno());
+        UUID houseUpdateId = UUID.fromString(request.getParameter("houseUpdateId"));
+        house.setId(houseUpdateId);
+
+        User user = (User) session.getAttribute("username");
+
+        if(houseUpdateId != null){
+            houseValidator.validate(house, result);
+
+            if(result.hasErrors()){
+                House updatedHouse = houseDAO.getHouse(houseUpdateId);
+                request.setAttribute("updatedHouse", updatedHouse);
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = format.parse(updatedHouse.getStartdate().toString());
+                String startdate = format.format(date);
+                request.setAttribute("startdate", startdate);
+
+                date = format.parse(updatedHouse.getEnddate().toString());
+                String enddate = format.format(date);
+                request.setAttribute("enddate", enddate);
+
+                List<Residence> residenceList;
+                try{
+                    residenceList = residenceDAO.getAllResidence(user.getId());
+                } catch (UserException e) {
+                    throw new RuntimeException(e);
+                }
+                request.setAttribute("residenceList", residenceList);
+
+                request.setAttribute("btnClicked", "Update House");
+                return "addPost";
+            }
+            try{
+                houseDAO.updateHouse(house);
+            } catch (HouseException e) {
+                System.out.println("Exception: " +e.getMessage());
+            }
+
+            request.setAttribute("btnClicked", "View House");
+
+            List<Residence> residenceList;
+            try{
+                residenceList = residenceDAO.getAllResidence(user.getId());
+            } catch (UserException e) {
+                throw new RuntimeException(e);
+            }
+            request.setAttribute("residenceList", residenceList);
+
+            List<House> houseList = new ArrayList<>();
+            List<HousePhoto> housePhotos = new ArrayList<>();
+            for(Residence r: residenceList){
+                List<House> list;
+                try{
+                    list = houseDAO.getHouseWithResidenceId(r.getId());
+                } catch (HouseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                for(House h: list){
+                    List<HousePhoto> housePhotoList;
+                    houseList.add(h);
+                    try{
+                        housePhotoList = housePhotoDAO.getAllHousePhotoWithHouseId(h.getId());
+                    } catch (UserException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    for(HousePhoto hp: housePhotoList){
+                        housePhotos.add(hp);
+                    }
+
+                }
+            }
+            request.setAttribute("housePhotos", housePhotos);
+            request.setAttribute("houseList", houseList);
+
+
+            request.setAttribute("houseUpdateSuccess", "Successfully Updated House: " + house.getHouseno());
+            logger.info("House Updated Successfully: " );
+
+            return "addPost";
+        }
+        return "addPost";
+
+    }
+
+    }
