@@ -19,6 +19,7 @@
                 </div>
                 <div class="col-xs-9">
                     <select  name="residenceId" class="form-control form-control-lg" id="residenceId">
+                        <option value="none" disabled selected hidden>Select Residence</option>
                         <c:forEach var="residence" items="${requestScope['residenceList']}">
                             <option value="${residence.getId()}">
                                 <c:out value="${residence}"></c:out>

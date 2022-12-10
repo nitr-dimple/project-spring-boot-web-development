@@ -23,7 +23,7 @@
       </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="${pageContext.request.contextPath}/">Home</a></li>
-        <li class="nav-item"><a  href="#">Explore</a></li>
+        <li class="nav-item"><a  href="${pageContext.request.contextPath}/user/explore.htm">Explore</a></li>
         <c:if test="${sessionScope['username'] != null}" >
           <li class="nav-item"><a href="#"> <c:out value="${sessionScope['username'].getFullname()}"></c:out> </a></li>
           <c:if test="${sessionScope['username'].getUsertype().equals('owner')}">

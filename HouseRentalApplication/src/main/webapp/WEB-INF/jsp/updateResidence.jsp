@@ -95,7 +95,7 @@
 
 
             <div class="col-1 text-center">
-                <input type="submit" value="Update Residence " class="btn btn-primary" name="updateResidence">
+                <input type="submit" value="Update" class="btn btn-primary" name="updateResidence">
             </div>
 
 

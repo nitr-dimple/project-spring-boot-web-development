@@ -24,6 +24,7 @@ public class UserDAO extends DAO{
             User user = (User) q.uniqueResult();
 
             commit();
+            close();
             return user;
 
         } catch (HibernateException e) {
@@ -52,6 +53,7 @@ public class UserDAO extends DAO{
             begin();
             getSession().delete(user);
             commit();
+            close();
 
         } catch (HibernateException e) {
             rollback();

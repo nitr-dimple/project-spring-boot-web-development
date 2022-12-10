@@ -34,6 +34,22 @@ public class HousePhotoDAO extends DAO{
         }
     }
 
+    public List<HousePhoto> get() throws HouseException {
+        try {
+            begin();
+            Query q = getSession().createQuery("from HousePhoto");
+            List<HousePhoto> housePhotos = q.list();
+
+            commit();
+            close();
+            return housePhotos;
+
+        } catch (HibernateException e) {
+            rollback();
+            throw new HouseException("Could not list house photo", e);
+        }
+    }
+
     public List<HousePhoto> getAllHousePhotoWithHouseId(UUID id) throws HouseException {
         try {
             begin();
@@ -42,6 +58,7 @@ public class HousePhotoDAO extends DAO{
             List<HousePhoto> housePhotos = q.list();
 
             commit();
+            close();
             return housePhotos;
 
         } catch (HibernateException e) {
@@ -57,6 +74,7 @@ public class HousePhotoDAO extends DAO{
             q.setParameter("id", id);
             q.executeUpdate();
             commit();
+            close();
         } catch (HibernateException e) {
             rollback();
             throw new HouseException("Could not delete house photo", e);

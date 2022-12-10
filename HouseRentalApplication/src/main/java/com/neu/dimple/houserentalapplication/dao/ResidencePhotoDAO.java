@@ -45,6 +45,7 @@ public class ResidencePhotoDAO extends DAO{
             List<ResidencePhoto> residencePhotos = q.list();
 
             commit();
+            close();
             return residencePhotos;
 
         } catch (HibernateException e) {
@@ -53,17 +54,18 @@ public class ResidencePhotoDAO extends DAO{
         }
     }
 
-    public List<ResidencePhoto> getAllResidencePhoto() throws UserException {
+    public List<ResidencePhoto> getAllResidencePhoto() throws ResidencePhotoException {
         try {
             begin();
             List<ResidencePhoto> residencePhotos = getSession().createCriteria(ResidencePhoto.class).list();
 
             commit();
+            close();
             return residencePhotos;
 
         } catch (HibernateException e) {
             rollback();
-            throw new UserException("Could not find residence photo with residence id " + e);
+            throw new ResidencePhotoException("Could not find residence photo with residence id " + e);
         }
     }
 
@@ -74,6 +76,7 @@ public class ResidencePhotoDAO extends DAO{
             q.setParameter("id", id);
             q.executeUpdate();
             commit();
+            close();
         } catch (HibernateException e) {
             rollback();
             throw new ResidenceException("Could not delete residence photo", e);

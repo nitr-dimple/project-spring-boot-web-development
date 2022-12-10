@@ -124,7 +124,7 @@ public class ResidencePhotoController {
         List<ResidencePhoto> residencePhotos;
         try{
             residencePhotos = residencePhotoDAO.getAllResidencePhoto();
-        } catch (UserException e) {
+        } catch (ResidencePhotoException e) {
             throw new RuntimeException(e);
         }
         request.setAttribute("residencePhotos", residencePhotos);

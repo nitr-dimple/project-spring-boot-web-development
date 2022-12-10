@@ -10,7 +10,7 @@
   <div style="width: 100%;" class="form-group">
     <div style="float: left; width: 20%; min-height:500px; margin-left: 50px;border:1px solid black; text-align: center ">
       <br>
-      <form method="post" action="${pageContext.request.contextPath}/user/viewResidence.htm">
+      <form method="get" action="${pageContext.request.contextPath}/user/viewResidence.htm">
         <input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="View Residence" name="btnClicked"/>
       </form>
 
@@ -81,25 +81,27 @@
 </div>
 
 <script>
-  $('select[name="residenceId"]').on('change', function (){
-    var residenceId = $(this).val();
-    if(residenceId){
-      $.ajax({
-        url: "/HouseRental/user/residence/" + residenceId,
-        type: "GET",
-        dataType: "json",
-        success: function(data) {
-          console.log(data);
-          $('select[name="houseId"]').empty();
-          $.each(data, function (key, value) {
-            $('select[name="houseId"]').append("<option value=" + value.id + ">" + value.houseno + "</option>");
-          });
-        }
-      });
-    }else{
-      $('select[name="houseId"]').empty();
-    }
-  });
+    $(document).ready(function () {
+        $('select[name="residenceId"]').on('change', function (){
+            var residenceId = $(this).val();
+            if(residenceId){
+                $.ajax({
+                    url: "/HouseRental/user/residence/" + residenceId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        console.log(data);
+                        $('select[name="houseId"]').empty();
+                        $.each(data, function (key, value) {
+                            $('select[name="houseId"]').append("<option value=" + value.id + ">" + value.houseno + "</option>");
+                        });
+                    }
+                });
+            }else{
+                $('select[name="houseId"]').empty();
+            }
+        });
+    })
 </script>
 <jsp:include page="footer.jsp" />
 

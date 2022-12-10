@@ -90,8 +90,6 @@ public class AddPostController {
             }
             return "addPost";
         }
-
-
         return "addPost";
     }
 

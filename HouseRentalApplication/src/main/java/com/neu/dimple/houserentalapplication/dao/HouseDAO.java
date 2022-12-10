@@ -46,11 +46,27 @@ public class HouseDAO extends DAO{
             List<House> houseList = q.list();
 
             commit();
+            close();
             return houseList;
 
         } catch (HibernateException e) {
             rollback();
             throw new HouseException("Could not get house info " + id, e);
+        }
+    }
+
+    public List<House> get() throws HouseException {
+        try {
+            begin();
+            Query q = getSession().createQuery("from House");
+            List<House> houses = q.list();
+            commit();
+            close();
+            return houses;
+
+        } catch (HibernateException e) {
+            rollback();
+            throw new HouseException("Could not list all houses ", e);
         }
     }
 
@@ -61,6 +77,7 @@ public class HouseDAO extends DAO{
             q.setParameter("id", id);
             q.executeUpdate();
             commit();
+            close();
         } catch (HibernateException e) {
             rollback();
             throw new HouseException("Could not delete house", e);
@@ -70,8 +87,9 @@ public class HouseDAO extends DAO{
     public House getHouse(UUID id) throws HouseException {
         try {
             begin();
-            House house = getSession().get(House.class, id);;
+            House house = getSession().get(House.class, id);
             commit();
+            close();
             return house;
 
         } catch (HibernateException e) {
@@ -85,6 +103,7 @@ public class HouseDAO extends DAO{
             begin();
             getSession().update(house);
             commit();
+            close();
         } catch (HibernateException e) {
             rollback();
             throw new HouseException("Could not update house", e);
