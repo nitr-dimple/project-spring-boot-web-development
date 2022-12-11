@@ -5,7 +5,6 @@ import com.neu.dimple.houserentalapplication.dao.ResidencePhotoDAO;
 import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.ResidencePhotoException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
-import com.neu.dimple.houserentalapplication.pojo.House;
 import com.neu.dimple.houserentalapplication.pojo.Residence;
 import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import com.neu.dimple.houserentalapplication.pojo.User;

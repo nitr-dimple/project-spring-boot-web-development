@@ -5,6 +5,7 @@ import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import com.neu.dimple.houserentalapplication.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
     @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
     UserValidator userValidator;
 
     @GetMapping("/user/add.htm")
@@ -41,6 +45,9 @@ public class UserController {
             return "addUserFormView";
 
         //instantiate Hibernate objects, and save user
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         try {
             UserDAO userDao = new UserDAO();
             userDao.create(user);

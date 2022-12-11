@@ -5,45 +5,46 @@
 <div class="container-fluid">
     <br>
     <br>
-    <form:form modelAttribute="user" method="POST">
+    <form method="POST" action="${pageContext.request.contextPath}/user/login.htm" class="form">
         <h2 align="center"> Please Login </h2>
 
+        <br>
         <div>
-            <div>
-                <div class="col-xs-3 text-right pd-2">
+            <c:if test="${ param.error != null}">
+                <div>
+                    <div class="col-xs-3 text-right pd-2">
+                    </div>
+                    <div class="col-xs-9 ">
+                        <div class="alert alert-danger" style="width: 50%">
+                            Invalid Username or Password
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-9">
-                    <c:if test="${requestScope['error'] != null}">
-                        <font color="red"> <c:out value="${requestScope['error']}" ></c:out> </font>
-                    </c:if>
-                </div>
-            </div>
+                <br/>
+                <br/>
+            </c:if>
 
-            <br>
-            <div>
-                <div class="col-xs-3 text-right pd-2">
-                    <label for="userType">Login As:</label>
-                </div>
-                <div class="col-xs-9">
+<%--            <div>--%>
+<%--                <div class="col-xs-3 text-right pd-2">--%>
+<%--                    <label for="userType">Login As:</label>--%>
+<%--                </div>--%>
+<%--                <div class="col-xs-9">--%>
+<%--                    <select name="userType" class="form-control form-control-lg" id="userType" style="width: 50%">--%>
+<%--                        <option value="owner"> House Owner</option>--%>
+<%--                        <option value="seeker"> House Seeker</option>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--            </div>--%>
 
-                    <form:select path="usertype" name="userType" class="form-control form-control-lg" id="userType" style="width: 50%">
-                        <option value="owner"> House Owner</option>
-                        <option value="seeker"> House Seeker</option>
-                    </form:select>
-                    <font color="red"> <form:errors path="usertype"></form:errors> </font>
-                </div>
-            </div>
-
-            <br/>
-            <br/>
+<%--            <br/>--%>
+<%--            <br/>--%>
 
             <div>
                 <div class="col-xs-3 text-right pd-2">
                     <label>Email: </label>
                 </div>
                 <div class="col-xs-9" >
-                    <form:input path="email" type="text" class="form-control form-control-lg" style="width: 50%" />
-                    <font color="red"> <form:errors path="email"></form:errors> </font>
+                    <input name="username" type="text" class="form-control form-control-lg" style="width: 50%" />
                 </div>
             </div>
             <br/>
@@ -54,8 +55,7 @@
                     <label>Password: </label>
                 </div>
                 <div class="col-xs-9" >
-                    <form:input path="password" type="password" name="password" class="form-control form-control-lg" style="width: 50%" />
-                    <font color="red"> <form:errors path="password"></form:errors> </font>
+                    <input type="password" name="password" class="form-control form-control-lg" style="width: 50%" />
                 </div>
             </div>
             <br/>
@@ -65,7 +65,7 @@
                 <input type="submit" value="Log In" class="btn btn-primary">
             </div>
         </div>
-    </form:form>
+    </form>
 </div>
 
 <jsp:include page="footer.jsp" />

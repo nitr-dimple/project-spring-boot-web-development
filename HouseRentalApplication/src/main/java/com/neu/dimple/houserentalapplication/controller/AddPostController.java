@@ -43,19 +43,6 @@ import java.util.UUID;
 
 @Controller
 public class AddPostController {
-
-    @Autowired
-    ResidenceValidator residenceValidator;
-
-    @Autowired
-    ResidencePhotoDAO residencePhotoDAO;
-
-    @Autowired
-    HouseValidator houseValidator;
-
-    @Autowired
-    HouseDAO houseDAO;
-
     @Autowired
     ResidenceDAO residenceDAO;
 
@@ -92,8 +79,5 @@ public class AddPostController {
         }
         return "addPost";
     }
-
-
-
 
 }

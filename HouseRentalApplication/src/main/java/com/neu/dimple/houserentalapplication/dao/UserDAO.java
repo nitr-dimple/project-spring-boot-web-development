@@ -4,6 +4,8 @@ import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,7 +13,11 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class UserDAO extends DAO{
+public class UserDAO extends DAO {
+
+//    @Autowired
+//    private BCryptPasswordEncoder passwordEncoder;
+
     public UserDAO() {
     }
 
