@@ -42,16 +42,18 @@ public class SecurityConfiguration {
                 .cors()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/user/addPost.htm*","/user/viewHouse.htm",
+                        "/user/addHouse.htm", "/user/deleteHouse.htm", "/user/updateHouse.htm",
+                        "/user/addHousePhoto.htm", "/user/deleteHousePhoto.htm", "/user/addResidence.htm",
+                        "/user/viewResidence.htm", "/user/deleteResidence.htm", "/user/updateResidence.htm",
+                        "/user/addResidencePhoto.htm", "/user/deleteResidencePhoto.htm")
+                .hasAnyAuthority("owner", "admin")
                 .antMatchers("/", "/images/**", "/user/explore.htm", "/user/add.htm")
                 .permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/user/login.htm")
                 .permitAll()
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .hasAnyRole("owner")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)

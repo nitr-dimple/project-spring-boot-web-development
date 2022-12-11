@@ -56,6 +56,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Username not found");
         }
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
+        logger.info("Role of the User:" + customUserDetails.getAuthorities());
+
         return customUserDetails;
     }
 

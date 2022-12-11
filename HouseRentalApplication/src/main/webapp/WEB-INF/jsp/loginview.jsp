@@ -7,9 +7,8 @@
     <br>
     <form method="POST" action="${pageContext.request.contextPath}/user/login.htm" class="form">
         <h2 align="center"> Please Login </h2>
-
         <br>
-        <div>
+        <div class="form-group">
             <c:if test="${ param.error != null}">
                 <div>
                     <div class="col-xs-3 text-right pd-2">
@@ -17,6 +16,20 @@
                     <div class="col-xs-9 ">
                         <div class="alert alert-danger" style="width: 50%">
                             Invalid Username or Password
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            </c:if>
+
+            <c:if test="${ param.logout != null}">
+                <div>
+                    <div class="col-xs-3 text-right pd-2">
+                    </div>
+                    <div class="col-xs-9 ">
+                        <div class="alert alert-success" style="width: 50%">
+                            Successfully Logged Out!!!
                         </div>
                     </div>
                 </div>
