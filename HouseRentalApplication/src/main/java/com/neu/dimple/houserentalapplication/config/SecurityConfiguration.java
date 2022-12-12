@@ -48,6 +48,8 @@ public class SecurityConfiguration {
                         "/user/viewResidence.htm", "/user/deleteResidence.htm", "/user/updateResidence.htm",
                         "/user/addResidencePhoto.htm", "/user/deleteResidencePhoto.htm")
                 .hasAnyAuthority("owner", "admin")
+                .antMatchers("/user/viewUser.htm", "/user/updateUser.htm", "/user/deleteUser.htm")
+                .hasAnyAuthority("owner", "admin", "seeker")
                 .antMatchers("/", "/images/**", "/user/explore.htm", "/user/add.htm")
                 .permitAll()
                 .and()

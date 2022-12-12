@@ -1,12 +1,16 @@
 package com.neu.dimple.houserentalapplication.dao;
 
+import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
+import com.neu.dimple.houserentalapplication.pojo.Residence;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 /**
  * @author Dimpleben Kanjibhai Patel
@@ -50,6 +54,19 @@ public class UserDAO extends DAO {
         } catch (HibernateException e) {
             rollback();
             throw new UserException("Exception while creating user: " + e.getMessage());
+        }
+    }
+
+    public void update(User user) throws UserException {
+
+        try {
+            begin();
+            getSession().update(user);
+            commit();
+            close();
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException("Could not update user", e);
         }
     }
 
