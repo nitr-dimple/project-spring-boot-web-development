@@ -1,18 +1,10 @@
 package com.neu.dimple.houserentalapplication.controller;
 
-import com.neu.dimple.houserentalapplication.dao.HouseDAO;
 import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
-import com.neu.dimple.houserentalapplication.dao.ResidencePhotoDAO;
-import com.neu.dimple.houserentalapplication.exceptions.HouseException;
-import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
-import com.neu.dimple.houserentalapplication.exceptions.ResidencePhotoException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.House;
 import com.neu.dimple.houserentalapplication.pojo.Residence;
-import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import com.neu.dimple.houserentalapplication.pojo.User;
-import com.neu.dimple.houserentalapplication.validator.HouseValidator;
-import com.neu.dimple.houserentalapplication.validator.ResidenceValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +14,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 /**
  * @author Dimpleben Kanjibhai Patel

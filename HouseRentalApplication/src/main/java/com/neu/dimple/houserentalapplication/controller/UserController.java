@@ -1,11 +1,7 @@
 package com.neu.dimple.houserentalapplication.controller;
 
 import com.neu.dimple.houserentalapplication.dao.UserDAO;
-import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
-import com.neu.dimple.houserentalapplication.exceptions.ResidencePhotoException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
-import com.neu.dimple.houserentalapplication.pojo.Residence;
-import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import com.neu.dimple.houserentalapplication.validator.UserValidator;
 import org.slf4j.Logger;
@@ -16,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Dimpleben Kanjibhai Patel
