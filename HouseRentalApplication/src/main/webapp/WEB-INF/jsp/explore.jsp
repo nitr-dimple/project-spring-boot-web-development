@@ -57,17 +57,17 @@
                   Address: <c:out value="${residence.street}"/>, <c:out value="${residence.city}" />
                   <c:out value="${residence.zipcode}"></c:out>, <c:out value="${residence.state}"></c:out>
                 </div>
-                <form method="GET" class="form-horizontal" action="${pageContext.request.contextPath}/user/updateHouse.htm">
+                <form method="GET" class="form-horizontal" action="${pageContext.request.contextPath}/user/visitHouse.htm">
                   <div class="col-xs-2 text-center"  style="padding-top: 4px">
-                    <input type="hidden" name="houseeUpdateId" value="${house.getId()}">
-                    <input type="submit" value="Update House" class="btn btn-primary" name="updateHouse">
+                    <input type="hidden" name="visitHouseId" value="${house.getId()}">
+                    <input type="submit" value="Make Visit" class="btn btn-primary" name="visithouse">
                   </div>
                 </form>
 
                 <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/user/deleteHouse.htm">
                   <div class="col-xs-2 text-center"  style="padding-top: 4px">
                     <input type="hidden" name="houseDeleteId" value="${house.getId()}">
-                    <input type="submit" value="Delete" class="btn btn-primary" name="deleteHouse">
+                    <input type="submit" value="Book" class="btn btn-primary" name="Book">
                   </div>
                 </form>
               </div>

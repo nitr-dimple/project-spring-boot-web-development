@@ -139,5 +139,11 @@ public class UserController {
         return "deleteUserSuccessView";
     }
 
+    @GetMapping("/user/visitHouse.htm")
+    public String handleVisitHouse(HttpSession session , HttpServletRequest request, SessionStatus status) {
+
+        logger.info("Reached GET /user/visitHouse.htm: ");
+        return "visitUser";
+    }
 
 }
