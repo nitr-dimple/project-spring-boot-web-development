@@ -1,6 +1,9 @@
 package com.neu.dimple.houserentalapplication.pojo;
 
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.hibernate.annotations.Type;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -27,6 +30,10 @@ public class User {
 
     private String gender;
     private String password;
+
+    private boolean accountActiveStatus;
+
+    private boolean verified;
 
     public User() {
     }
@@ -77,5 +84,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAccountActiveStatus() {
+        return accountActiveStatus;
+    }
+
+    public void setAccountActiveStatus(boolean accountActiveStatus) {
+        this.accountActiveStatus = accountActiveStatus;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }

@@ -16,6 +16,7 @@
         <mapping class="com.neu.dimple.houserentalapplication.pojo.ResidencePhoto" />
         <mapping class="com.neu.dimple.houserentalapplication.pojo.House" />
         <mapping class="com.neu.dimple.houserentalapplication.pojo.HousePhoto" />
+        <mapping class="com.neu.dimple.houserentalapplication.pojo.UserEmailToken" />
 
 
 

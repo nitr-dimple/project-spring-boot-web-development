@@ -51,7 +51,7 @@ public class SecurityConfiguration {
                 .antMatchers("/user/viewUser.htm", "/user/updateUser.htm", "/user/deleteUser.htm",
                         "/user/visitHouse.htm")
                 .hasAnyAuthority("owner", "admin", "seeker")
-                .antMatchers("/", "/images/**", "/user/explore.htm", "/user/add.htm")
+                .antMatchers("/", "/images/**", "/user/explore.htm", "/user/add.htm", "/user/verifyUserEmail/*")
                 .permitAll()
                 .and()
                 .formLogin()

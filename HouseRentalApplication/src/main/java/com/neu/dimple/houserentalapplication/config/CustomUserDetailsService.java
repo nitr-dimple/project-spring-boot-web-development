@@ -49,14 +49,23 @@ public class CustomUserDetailsService implements UserDetailsService {
             System.out.println("Exception: " +e.getMessage());
         }
         logger.info("Loaded User:" + user);
-        session.setAttribute("username", user);
 
 
         if (null == user ) {
             throw new UsernameNotFoundException("Username not found");
         }
+
+        if(!user.isVerified()){
+            throw new UsernameNotFoundException("Please Verify your account");
+        }
+
+        if(!user.isAccountActiveStatus()){
+            throw new UsernameNotFoundException("Your account is deactivated");
+        }
+
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
         logger.info("Role of the User:" + customUserDetails.getAuthorities());
+        session.setAttribute("username", user);
 
         return customUserDetails;
     }

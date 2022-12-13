@@ -2,6 +2,7 @@ package com.neu.dimple.houserentalapplication.controller;
 
 import com.neu.dimple.houserentalapplication.dao.UserDAO;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
+import com.neu.dimple.houserentalapplication.handler.EmailHandler;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import com.neu.dimple.houserentalapplication.validator.UserValidator;
 import org.slf4j.Logger;
@@ -60,6 +61,7 @@ public class UserController {
         //instantiate Hibernate objects, and save user
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        EmailHandler emailHandler = new EmailHandler();
 
         try {
             userDao.create(user);
@@ -67,6 +69,10 @@ public class UserController {
         catch(UserException e) {
             System.out.println("Exception: " +e.getMessage());
         }
+
+        logger.info("Calling sendEmail function for user: " + user.getEmail());
+        emailHandler.sendEmail(user);
+
 
         //mark it complete
         status.setComplete();

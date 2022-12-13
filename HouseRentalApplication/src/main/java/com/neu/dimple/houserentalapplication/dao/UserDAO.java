@@ -19,10 +19,24 @@ import java.util.UUID;
 @Component
 public class UserDAO extends DAO {
 
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
 
     public UserDAO() {
+    }
+
+    public User getUser(UUID id) throws UserException {
+        try {
+
+            begin();
+            User user = getSession().get(User.class, id);
+
+            commit();
+            close();
+            return user;
+
+        } catch (HibernateException e) {
+            rollback();
+            throw new UserException("Could not find user " + id, e);
+        }
     }
 
     public User get(String email) throws UserException {
@@ -39,7 +53,7 @@ public class UserDAO extends DAO {
 
         } catch (HibernateException e) {
             rollback();
-            throw new UserException("Could not create user " + email, e);
+            throw new UserException("Could not get user " + email, e);
         }
     }
     public User create(User user) throws UserException {

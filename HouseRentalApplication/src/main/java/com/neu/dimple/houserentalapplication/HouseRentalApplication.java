@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@ComponentScan({"com.neu.dimple.houserentalapplication.controller", "com.neu.dimple.houserentalapplication.pojo","com.neu.dimple.houserentalapplication.dao", "com.neu.dimple.houserentalapplication.validator", "com.neu.dimple.houserentalapplication.config"})
+@ComponentScan({"com.neu.dimple.houserentalapplication.controller", "com.neu.dimple.houserentalapplication.pojo","com.neu.dimple.houserentalapplication.dao", "com.neu.dimple.houserentalapplication.validator", "com.neu.dimple.houserentalapplication.config", "com.neu.dimple.houserentalapplication.handler"})
 public class HouseRentalApplication extends SpringBootServletInitializer implements WebMvcConfigurer {
 
 	public static void main(String[] args) {

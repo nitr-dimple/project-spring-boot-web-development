@@ -7,16 +7,14 @@
     <br>
     <form method="POST" action="${pageContext.request.contextPath}/user/login.htm" class="form">
         <h2 align="center"> Please Login </h2>
-        <br>
-        <div class="form-group">
+<%--        <br>--%>
+        <div>
             <c:if test="${ param.error != null}">
-                <div>
+                <div class="form-group">
                     <div class="col-xs-3 text-right pd-2">
                     </div>
-                    <div class="col-xs-9 ">
-                        <div class="alert alert-danger" style="width: 50%">
-                            Invalid Username or Password
-                        </div>
+                    <div class="col-xs-9" style="width: 50%">
+                        <font color="red">Invalid Username or Password </font>
                     </div>
                 </div>
                 <br/>
@@ -24,35 +22,42 @@
             </c:if>
 
             <c:if test="${ param.logout != null}">
-                <div>
+                <div class="form-group">
                     <div class="col-xs-3 text-right pd-2">
                     </div>
-                    <div class="col-xs-9 ">
-                        <div class="alert alert-success" style="width: 50%">
-                            Successfully Logged Out!!!
-                        </div>
+                    <div class="col-xs-9 " style="width: 50%">
+                        <font color="green">Successfully Logged Out!!!</font>
                     </div>
                 </div>
                 <br/>
                 <br/>
             </c:if>
 
-<%--            <div>--%>
-<%--                <div class="col-xs-3 text-right pd-2">--%>
-<%--                    <label for="userType">Login As:</label>--%>
-<%--                </div>--%>
-<%--                <div class="col-xs-9">--%>
-<%--                    <select name="userType" class="form-control form-control-lg" id="userType" style="width: 50%">--%>
-<%--                        <option value="owner"> House Owner</option>--%>
-<%--                        <option value="seeker"> House Seeker</option>--%>
-<%--                    </select>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+            <c:if test="${ requestScope['authentication-error'] != null}">
+                <div class="form-group">
+                    <div class="col-xs-3 text-right pd-2">
+                    </div>
+                    <div class="col-xs-9" style="width: 50%">
+                        <font color="red"><c:out value="${ requestScope['authentication-error']}"> </c:out> </font>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            </c:if>
 
-<%--            <br/>--%>
-<%--            <br/>--%>
+            <c:if test="${ requestScope['authentication-success'] != null}">
+                <div class="form-group">
+                    <div class="col-xs-3 text-right pd-2">
+                    </div>
+                    <div class="col-xs-9" style="width: 50%">
+                        <font color="green"><c:out value="${ requestScope['authentication-success']}"> </c:out> </font>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            </c:if>
 
-            <div>
+            <div class="form-group">
                 <div class="col-xs-3 text-right pd-2">
                     <label>Email: </label>
                 </div>
@@ -63,7 +68,7 @@
             <br/>
             <br/>
 
-            <div class="mt-5">
+            <div class="form-group">
                 <div class="col-xs-3 text-right pd-2" >
                     <label>Password: </label>
                 </div>
