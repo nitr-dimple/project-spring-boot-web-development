@@ -17,7 +17,7 @@
       </br>
       <c:forEach var="residence" items="${requestScope['residenceList']}">
         <c:forEach var="house" items="${requestScope['houseList']}">
-          <c:if test="${house.getResidenceId() eq residence.getId()}">
+          <c:if test="${house.isAvailable() && house.getResidenceId() eq residence.getId()}">
             <div class="form-horizontal" style="border: 1px solid black;">
               <br>
               <div class="form-group" >

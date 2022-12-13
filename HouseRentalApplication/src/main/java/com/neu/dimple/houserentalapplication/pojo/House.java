@@ -52,6 +52,8 @@ public class House {
 
     private boolean gasbill;
 
+    private boolean isAvailable;
+
     private String parking;
 
     private boolean maintenancecost;
@@ -192,7 +194,11 @@ public class House {
         this.parking = parking;
     }
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
 
-
-
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
 }
