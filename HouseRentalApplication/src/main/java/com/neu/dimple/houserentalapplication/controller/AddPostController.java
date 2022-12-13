@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Dimpleben Kanjibhai Patel
@@ -77,15 +78,40 @@ public class AddPostController {
         return "addPost";
     }
 
-    @GetMapping("/user/viewPost.htm")
+    @PostMapping("/user/viewPost.htm")
     public String handleViewPost(HttpSession session , HttpServletRequest request, SessionStatus status){
 
         logger.info("Reached: POST /user/viewPost.htm");
 
-        String btnClicked = request.getParameter("btnClicked");
+        String btnClicked = request.getParameter("postHouse");
+        String houseId = request.getParameter("housePostId");
         User user = (User) session.getAttribute("username");
-        request.setAttribute("btnClicked", btnClicked);
+        request.setAttribute("btnClicked", "View Post");
+        House updateHouse;
 
+        if(houseId != null){
+            UUID uuid = UUID.fromString(houseId);
+            logger.info("Fetching house details: " + houseId);
+
+            try{
+                updateHouse = houseDAO.getHouse(uuid);
+            } catch (HouseException e) {
+                throw new RuntimeException(e);
+            }
+            if(btnClicked.equals("Post"))
+                updateHouse.setAvailable(true);
+            else
+                updateHouse.setAvailable(false);
+
+            logger.info("Updating house detals: " + houseId);
+
+            try{
+                houseDAO.updateHouse(updateHouse);
+            } catch (HouseException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
 
         List<Residence> residenceList;
         try{

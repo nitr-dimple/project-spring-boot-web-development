@@ -26,7 +26,7 @@
         <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="Add House Photo" name="btnClicked"/></h2>
       </form>
 
-    <form method="get" action="${pageContext.request.contextPath}/user/viewPost.htm">
+    <form method="post" action="${pageContext.request.contextPath}/user/viewPost.htm">
         <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="View Post" name="btnClicked"/></h2>
     </form>
 

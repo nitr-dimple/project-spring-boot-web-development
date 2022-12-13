@@ -69,7 +69,7 @@
                     </div>
 
                     <c:if test="${house.isAvailable() eq false}">
-                        <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/user/postHouse.htm">
+                        <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/user/viewPost.htm">
                             <div class="col-xs-2 text-center"  style="padding-top: 4px">
                                 <input type="hidden" name="housePostId" value="${house.getId()}">
                                 <input type="submit" value="Post" class="btn btn-primary" name="postHouse">
@@ -77,10 +77,10 @@
                         </form>
                     </c:if>
                     <c:if test="${house.isAvailable()}">
-                        <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/user/removePostHouse.htm">
+                        <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/user/viewPost.htm">
                             <div class="col-xs-2 text-center"  style="padding-top: 4px">
                                 <input type="hidden" name="housePostId" value="${house.getId()}">
-                                <input type="submit" value="Remove Post" class="btn btn-primary" name="removePostHouse">
+                                <input type="submit" value="Remove Post" class="btn btn-primary" name="postHouse">
                             </div>
                         </form>
                     </c:if>
