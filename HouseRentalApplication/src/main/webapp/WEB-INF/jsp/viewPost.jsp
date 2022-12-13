@@ -90,7 +90,7 @@
                 <div class="form-group" style="">
                     <c:forEach var="housePhoto" items="${requestScope['housePhotoList']}">
                         <c:if test="${housePhoto.getHouseId() eq house.getId()}">
-                            <div class="card col-xs-3" style="width: 20rem; height: 20rem; border: 1px solid black; margin-left: 20px; margin-top: 10px; padding: 0">
+                            <div class="card col-xs-3" style="width: 25rem; height: 20rem; border: 1px solid black; margin-left: 20px; margin-top: 10px; padding: 0">
                                 <img src="<%=request.getContextPath()%>/images/${housePhoto.getImagename()}" alt="Avatar" style="width:100%; height:100%">
                             </div>
                         </c:if>
