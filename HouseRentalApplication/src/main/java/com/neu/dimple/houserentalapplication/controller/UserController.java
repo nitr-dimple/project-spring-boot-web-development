@@ -58,6 +58,19 @@ public class UserController {
         if (result.hasErrors())
             return "addUserFormView";
 
+        User userExist = null;
+        try {
+            userExist = userDao.get(user.getEmail());
+        }
+        catch(UserException e) {
+            System.out.println("Exception: " +e.getMessage());
+        }
+
+        if(userExist != null){
+            request.setAttribute("account-create-error", "Account with this email id already exists");
+            return "addUserFormView";
+        }
+
         //instantiate Hibernate objects, and save user
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));

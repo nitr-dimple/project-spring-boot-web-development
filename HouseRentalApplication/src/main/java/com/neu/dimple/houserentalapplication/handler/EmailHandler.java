@@ -40,7 +40,7 @@ public class EmailHandler {
         String fromId = "noreply@" + domainName;
         String emailId = user.getEmail();
         long now = Instant.now().getEpochSecond();
-        long ttl = 60 * 5;
+        long ttl = 60*5;
         UserEmailDAO userEmailDAO = new UserEmailDAO();
 
 
@@ -60,7 +60,9 @@ public class EmailHandler {
         String link = "http://" + serverName + "/HouseRental/user/verifyUserEmail?email=" + emailId + "&token=" + token;
 
         String message = "Hi " + firstName + ",  \n\n" +
-                "Thank you for registration, Please click on the below link to verify your account: \n\n" +
+                "Thank you for registration, \n" +
+                "Your token will expire in 60 sec \n\n" +
+                "Please click on the below link to verify your account: \n\n" +
                 link + "\n\n Regards, \n" + domainName + " \n";
         String subject = "Verification Email";
         Email to = new Email(emailId);

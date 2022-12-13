@@ -1,4 +1,5 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="header.jsp" />
 <br>
 <div class="container-fluid">
@@ -8,6 +9,17 @@
         <form:form modelAttribute="user" method="POST" class="form-horizontal">
             <fieldset>
                 <legend class="mt-1">Create an Account</legend>
+
+                <c:if test="${ requestScope['account-create-error'] != null}">
+                    <div class="form-group">
+                        <div class="col-xs-3 text-right pd-2">
+                        </div>
+                        <div class="col-xs-9" style="width: 50%">
+                            <font color="red"><c:out value="${ requestScope['account-create-error']}"> </c:out> </font>
+                        </div>
+                    </div>
+                    <br/>
+                </c:if>
 
                 <div class="form-group">
                     <div class="col-xs-3 text-right pd-2">
