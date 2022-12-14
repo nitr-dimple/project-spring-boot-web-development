@@ -1,13 +1,9 @@
 package com.neu.dimple.houserentalapplication.dao;
 
-import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
-import com.neu.dimple.houserentalapplication.pojo.Residence;
 import com.neu.dimple.houserentalapplication.pojo.User;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
