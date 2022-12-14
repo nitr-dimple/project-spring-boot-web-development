@@ -28,11 +28,15 @@ public class Visit {
     @Type(type= "org.hibernate.type.UUIDCharType")
     private UUID houseId;
 
+    private String name;
+
     private String email;
 
     private long phonenumber;
 
     private String description;
+
+    private boolean visitingStatus;
 
     public Visit() {
     }
@@ -83,5 +87,21 @@ public class Visit {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isVisitingStatus() {
+        return visitingStatus;
+    }
+
+    public void setVisitingStatus(boolean visitingStatus) {
+        this.visitingStatus = visitingStatus;
     }
 }

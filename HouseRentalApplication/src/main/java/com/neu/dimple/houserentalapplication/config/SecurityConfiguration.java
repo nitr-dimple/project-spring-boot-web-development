@@ -46,7 +46,9 @@ public class SecurityConfiguration {
                         "/user/addHouse.htm", "/user/deleteHouse.htm", "/user/updateHouse.htm",
                         "/user/addHousePhoto.htm", "/user/deleteHousePhoto.htm", "/user/addResidence.htm",
                         "/user/viewResidence.htm", "/user/deleteResidence.htm", "/user/updateResidence.htm",
-                        "/user/addResidencePhoto.htm", "/user/deleteResidencePhoto.htm", "/user/viewPost.htm")
+                        "/user/addResidencePhoto.htm", "/user/deleteResidencePhoto.htm", "/user/viewPost.htm",
+                        "/user/viewVisitBooking.htm", "/user/viewVisits.htm","/user/markVisitComplete.htm"
+                )
                 .hasAnyAuthority("owner", "admin")
                 .antMatchers("/user/viewUser.htm", "/user/updateUser.htm", "/user/deleteUser.htm",
                         "/user/visitHouse.htm")
@@ -94,32 +96,6 @@ public class SecurityConfiguration {
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //        return (web) -> web.ignoring().antMatchers("/")
 //                .antMatchers("/images**");
-//    }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http
-//                .authorizeRequests()
-//                .antMatchers(
-//                "/",
-//                "/user/login.htm",
-//                "/user/add.htm"
-//                ).permitAll()
-//                .and()
-//                .formLogin();
-////                .anyRequest().authenticated()
-////                .and()
-////                .formLogin()
-////                .loginPage("/user/login.htm")
-////                .permitAll()
-////                .and()
-////                .logout()
-////                .invalidateHttpSession(true)
-////                .clearAuthentication(true)
-////                .logoutRequestMatcher(new AntPathRequestMatcher("user/logout.htm"))
-////                .logoutSuccessUrl("/user/login.htm?logout")
-////                .permitAll();
-//
 //    }
 
 }

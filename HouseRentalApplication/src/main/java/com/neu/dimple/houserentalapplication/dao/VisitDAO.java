@@ -1,13 +1,12 @@
 package com.neu.dimple.houserentalapplication.dao;
 
-import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.exceptions.VisitException;
-import com.neu.dimple.houserentalapplication.pojo.User;
 import com.neu.dimple.houserentalapplication.pojo.Visit;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -36,17 +35,17 @@ public class VisitDAO extends DAO{
         }
     }
 
-    public Visit getVisitByHouseId(UUID id) throws VisitException {
+    public List<Visit> getVisitByHouseId(UUID id) throws VisitException {
         try {
 
             begin();
-            Query q = getSession().createQuery("from Visit where userId= :id");
+            Query q = getSession().createQuery("from Visit where houseId= :id");
             q.setParameter("id", id);
-            Visit visit = (Visit) q.uniqueResult();
+            List<Visit> visits = q.list();
 
             commit();
             close();
-            return visit;
+            return visits;
 
         } catch (HibernateException e) {
             rollback();
@@ -63,6 +62,24 @@ public class VisitDAO extends DAO{
             close();
 
             return visit;
+        } catch (HibernateException e) {
+            rollback();
+            throw new VisitException("Exception while creating user: " + e.getMessage());
+        }
+    }
+
+    public void updateVisitStatus(UUID id, boolean visitStatus) throws VisitException {
+        try {
+            //save user object in the database
+            begin();
+            getSession().createQuery("update Visit v set v.visitingStatus = :visitStatus where id = : id")
+                    .setParameter("id", id)
+                    .setParameter("visitStatus", visitStatus)
+                    .executeUpdate();
+            commit();
+            close();
+
+            return;
         } catch (HibernateException e) {
             rollback();
             throw new VisitException("Exception while creating user: " + e.getMessage());

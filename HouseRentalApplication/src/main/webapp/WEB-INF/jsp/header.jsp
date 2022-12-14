@@ -28,6 +28,7 @@
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/viewUser.htm"> <c:out value="${sessionScope['username'].getFullname()}"></c:out> </a></li>
           <c:if test="${sessionScope['username'].getUsertype().equals('owner')}">
             <li class="nav-item"><a href="${pageContext.request.contextPath}/user/addPost.htm">Add Post</a></li>
+            <li class="nav-item"><a href="${pageContext.request.contextPath}/user/viewVisitBooking.htm">Visiting/Booking</a></li>
           </c:if>
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/logout.htm">Logout</a></li>
         </c:if>

@@ -20,6 +20,7 @@ public class VisitorValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        ValidationUtils.rejectIfEmpty(errors, "name", "empty-name", "name can not be empty");
         ValidationUtils.rejectIfEmpty(errors, "email", "empty-email", "email can not be empty");
         ValidationUtils.rejectIfEmpty(errors, "phonenumber", "empty-phonenumber", "phonenumber can not be empty");
         ValidationUtils.rejectIfEmpty(errors, "description", "empty-description", "description can not be empty");

@@ -24,6 +24,16 @@
 
                     <div class="form-group">
                         <div class="col-xs-3 text-right pd-2">
+                            <label for="name">Name:</label>
+                        </div>
+                        <div class="col-xs-6">
+                            <form:input path="name"  type="text" name="email" class="form-control form-control-lg" id="name" />
+                            <font color="red"> <form:errors path="name"></form:errors> </font>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-3 text-right pd-2">
                             <label for="email">Contact E-mail:</label>
                         </div>
                         <div class="col-xs-6">
@@ -57,7 +67,8 @@
 
                     <div class="form-group" >
                         <div class="col-xs-8 text-right" style="padding-top: 6px; padding-left: 20px;">
-                                <input type="submit" value="Confirm Visiting" class="btn btn-primary" name="visitUser">
+                            <input type="hidden" name="visitHouseId" value="${requestScope['visitHouseId']}">
+                            <input type="submit" value="Confirm Visiting" class="btn btn-primary" name="visitUser">
                         </div>
                     </div>
 
