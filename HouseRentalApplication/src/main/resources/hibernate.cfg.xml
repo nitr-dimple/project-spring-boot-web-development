@@ -18,7 +18,7 @@
         <mapping class="com.neu.dimple.houserentalapplication.pojo.HousePhoto" />
         <mapping class="com.neu.dimple.houserentalapplication.pojo.UserEmailToken" />
         <mapping class="com.neu.dimple.houserentalapplication.pojo.Visit" />
-
+        <mapping class="com.neu.dimple.houserentalapplication.pojo.Schedule" />
 
 
     </session-factory>

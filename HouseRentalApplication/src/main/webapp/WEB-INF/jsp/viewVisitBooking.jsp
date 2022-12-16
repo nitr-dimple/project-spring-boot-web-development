@@ -42,10 +42,10 @@
           <jsp:include page="viewVisits.jsp" />
         </c:if>
 
-<%--        &lt;%&ndash;        If clicked on Add Residence      &ndash;%&gt;--%>
-<%--        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Add Residence')}">--%>
-<%--          <jsp:include page="addResidence.jsp" />--%>
-<%--        </c:if>--%>
+        <%--        If clicked on Schedule Tour      --%>
+        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Schedule Tour')}">
+          <jsp:include page="scheduleVisitTour.jsp" />
+        </c:if>
 
 
 <%--        &lt;%&ndash;        If clicked on update Residence      &ndash;%&gt;--%>
@@ -89,28 +89,5 @@
   </div>
 </div>
 
-<script>
-  $(document).ready(function () {
-    $('select[name="residenceId"]').on('change', function (){
-      var residenceId = $(this).val();
-      if(residenceId){
-        $.ajax({
-          url: "/HouseRental/user/residence/" + residenceId,
-          type: "GET",
-          dataType: "json",
-          success: function(data) {
-            console.log(data);
-            $('select[name="houseId"]').empty();
-            $.each(data, function (key, value) {
-              $('select[name="houseId"]').append("<option value=" + value.id + ">" + value.houseno + "</option>");
-            });
-          }
-        });
-      }else{
-        $('select[name="houseId"]').empty();
-      }
-    });
-  })
-</script>
 <jsp:include page="footer.jsp" />
 

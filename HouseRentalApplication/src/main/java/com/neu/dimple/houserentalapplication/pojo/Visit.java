@@ -38,6 +38,8 @@ public class Visit {
 
     private boolean visitingStatus;
 
+    private boolean visitScheduled;
+
     public Visit() {
     }
 
@@ -103,5 +105,13 @@ public class Visit {
 
     public void setVisitingStatus(boolean visitingStatus) {
         this.visitingStatus = visitingStatus;
+    }
+
+    public boolean isVisitScheduled() {
+        return visitScheduled;
+    }
+
+    public void setVisitScheduled(boolean visitScheduled) {
+        this.visitScheduled = visitScheduled;
     }
 }

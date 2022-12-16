@@ -9,17 +9,10 @@
         </div>
     </div>
 </c:if>
-<c:if test="${requestScope['houseUpdateSuccess'] != null}">
+<c:if test="${requestScope['schedule-appointment-success'] != null}">
     <div class="form-group">
         <div class="col-xs-8">
-            <font color="green"><c:out value="${requestScope['houseUpdateSuccess']}" ></c:out> </font>
-        </div>
-    </div>
-</c:if>
-<c:if test="${requestScope['housePhotoDeleteSuccess'] != null}">
-    <div class="form-group">
-        <div class="col-xs-8">
-            <font color="green"><c:out value="${requestScope['housePhotoDeleteSuccess']}" ></c:out> </font>
+            <font color="green"><c:out value="${requestScope['schedule-appointment-success']}" ></c:out> </font>
         </div>
     </div>
 </c:if>
@@ -50,12 +43,14 @@
                                     Availability: ${visit.getDescription()} <br/>
                                     Status: <c:if test="${visit.isVisitingStatus()}">Completed</c:if><c:if test="${visit.isVisitingStatus() eq false}">Not visited</c:if>
                                 </div>
-                                <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/user/scheduleVisitTour.htm">
-                                    <div class="col-xs-2 text-center"  style="padding-top: 4px">
-                                        <input type="hidden" name="visitId" value="${visit.getId()}">
-                                        <input type="submit" value="Schedule Tour" class="btn btn-primary" name="scheduleVisitTour">
-                                    </div>
-                                </form>
+                                <c:if test="${visit.isVisitScheduled() eq false}">
+                                    <form method="get" class="form-horizontal" action="${pageContext.request.contextPath}/user/scheduleVisitTour.htm">
+                                        <div class="col-xs-2 text-center"  style="padding-top: 4px">
+                                            <input type="hidden" name="visitId" value="${visit.getId()}">
+                                            <input type="submit" value="Schedule Tour" class="btn btn-primary" name="scheduleVisitTour">
+                                        </div>
+                                    </form>
+                                </c:if>
                                 <c:if test="${visit.isVisitingStatus() eq false}">
                                     <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/user/markVisitComplete.htm">
                                         <div class="col-xs-3 text-center"  style="padding-top: 4px">
@@ -73,6 +68,21 @@
                                     </form>
                                 </c:if>
 
+                                <c:forEach var="schedule" items="${requestScope['scheduleList']}">
+                                    <c:if test="${schedule.getVisit().getId() eq visit.getId()}">
+                                        <div class="col-xs-6 text-center"  style="padding-top: 4px; border-top: 1px solid black;">
+                                        </div>
+                                        <div class="col-xs-6"  style="padding-top: 4px;  border-top: 1px solid black;">
+                                            Appointment Details: <br>
+                                            Name: ${schedule.getName()} <br>
+                                            Email: ${schedule.getEmail()} <br>
+                                            Phone Number: ${schedule.getPhonenumber()} <br>
+                                            Schedule Date: ${schedule.getScheduleDate()} <br>
+                                            Time: ${schedule.getScheduledTime()} <br>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
+
 
                             </div>
                             </c:if>
@@ -83,3 +93,5 @@
         </c:if>
     </c:forEach>
 </c:forEach>
+<br>
+<br>

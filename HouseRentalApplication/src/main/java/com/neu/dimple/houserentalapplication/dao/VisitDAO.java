@@ -64,7 +64,7 @@ public class VisitDAO extends DAO{
             return visit;
         } catch (HibernateException e) {
             rollback();
-            throw new VisitException("Exception while creating user: " + e.getMessage());
+            throw new VisitException("Exception while creating visit: " + e.getMessage());
         }
     }
 
@@ -82,7 +82,35 @@ public class VisitDAO extends DAO{
             return;
         } catch (HibernateException e) {
             rollback();
-            throw new VisitException("Exception while creating user: " + e.getMessage());
+            throw new VisitException("Exception while updating visit status: " + e.getMessage());
+        }
+    }
+
+    public void update(Visit visit) throws VisitException {
+        try {
+            //save user object in the database
+            begin();
+            getSession().update(visit);
+            commit();
+            close();
+
+            return;
+        } catch (HibernateException e) {
+            rollback();
+            throw new VisitException("Exception while updating visit: " + e.getMessage());
+        }
+    }
+
+    public Visit get(UUID id) throws VisitException{
+        try{
+            begin();
+            Visit visit = getSession().get(Visit.class, id);
+            commit();
+            close();
+            return visit;
+        }catch (HibernateException e){
+            rollback();
+            throw new VisitException("Exception while fetching visit with id: " + id);
         }
     }
 }

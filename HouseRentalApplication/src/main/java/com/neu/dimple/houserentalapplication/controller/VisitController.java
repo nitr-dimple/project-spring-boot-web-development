@@ -2,11 +2,14 @@ package com.neu.dimple.houserentalapplication.controller;
 
 import com.neu.dimple.houserentalapplication.dao.HouseDAO;
 import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
+import com.neu.dimple.houserentalapplication.dao.ScheduleDAO;
 import com.neu.dimple.houserentalapplication.dao.VisitDAO;
 import com.neu.dimple.houserentalapplication.exceptions.HouseException;
+import com.neu.dimple.houserentalapplication.exceptions.ScheduleException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.exceptions.VisitException;
 import com.neu.dimple.houserentalapplication.pojo.*;
+import com.neu.dimple.houserentalapplication.validator.ScheduleValidator;
 import com.neu.dimple.houserentalapplication.validator.VisitorValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +49,12 @@ public class VisitController {
 
     @Autowired
     HouseDAO houseDAO;
+
+    @Autowired
+    ScheduleValidator scheduleValidator;
+
+    @Autowired
+    ScheduleDAO scheduleDAO;
 
 
     @GetMapping("/user/visitHouse.htm")
@@ -136,6 +145,14 @@ public class VisitController {
                     visitList.add(visit);
             }
         }
+        List<Schedule> scheduleList;
+
+        try{
+            scheduleList = scheduleDAO.getWithVisitId();
+        } catch (ScheduleException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("scheduleList", scheduleList);
 
         request.setAttribute("houseList", houseList);
         request.setAttribute("visitList", visitList);
@@ -144,7 +161,7 @@ public class VisitController {
     }
 
     @PostMapping("/user/markVisitComplete.htm")
-    public String handlemarkVisitComplete(HttpSession session , HttpServletRequest request, SessionStatus status) {
+    public String handlemarkVisitComplete(HttpSession session , HttpServletRequest request) {
 
         logger.info("Reached POST /user/markVisitComplete.htm: ");
         request.setAttribute("btnClicked", "View Visits");
@@ -177,6 +194,7 @@ public class VisitController {
 
         List<House> houseList = new ArrayList<>();
         List<Visit> visitList = new ArrayList<>();
+        List<Schedule> scheduleList;
 
         for(Residence residence: residenceList){
             List<House> houses;
@@ -197,8 +215,17 @@ public class VisitController {
 
                 for(Visit visit: visits)
                     visitList.add(visit);
+
             }
         }
+
+        try{
+            scheduleList = scheduleDAO.getWithVisitId();
+        } catch (ScheduleException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("scheduleList", scheduleList);
+
 
         request.setAttribute("houseList", houseList);
         request.setAttribute("visitList", visitList);
@@ -208,6 +235,109 @@ public class VisitController {
             request.setAttribute("visit-update-success", "Successfully Mark visit as not completed");
 
         return "viewVisitBooking";
+    }
+
+    @GetMapping("/user/scheduleVisitTour.htm")
+    public String handleScheduleVisitTour(Schedule schedule, ModelMap modelMap, HttpServletRequest request) {
+
+        logger.info("Reached GET /user/scheduleVisitTour.htm: ");
+        String btnClicked = request.getParameter("scheduleVisitTour");
+        request.setAttribute("btnClicked", btnClicked);
+
+        modelMap.addAttribute("schedule", schedule);
+
+        return "viewVisitBooking";
+    }
+
+    @PostMapping("/user/scheduleVisitTour.htm")
+    public String handleConfirmScheduleVisitTour(HttpSession session, @ModelAttribute("schedule") Schedule schedule, BindingResult result, HttpServletRequest request){
+
+        logger.info("Reached POST /user/scheduleVisitTour.htm");
+        scheduleValidator.validate(schedule, result);
+
+        request.setAttribute("btnClicked", "View Visits");
+
+        if(result.hasErrors()){
+            return "viewVisitBooking";
+        }
+
+        String visitId = request.getParameter("visitId");
+        logger.info("Scheduled an appointment for visitId", visitId);
+
+        Visit visit;
+
+        try{
+            visit = visitDAO.getVisit(UUID.fromString(visitId));
+        } catch (VisitException e) {
+            throw new RuntimeException(e);
+        }
+
+        visit.setVisitScheduled(true);
+        try{
+            visitDAO.update(visit);
+        } catch (VisitException e) {
+            throw new RuntimeException(e);
+        }
+
+        schedule.setVisit(visit);
+
+        try{
+            schedule = scheduleDAO.create(schedule);
+        } catch (ScheduleException e) {
+            throw new RuntimeException(e);
+        }
+
+        logger.info("Successfully Scheduled an appointment");
+        request.setAttribute("schedule-appointment-success", "Successfully Scheduled an appointment");
+
+        User user = (User) session.getAttribute("username");
+
+        List<Residence> residenceList;
+        try{
+            residenceList = residenceDAO.getAllResidence(user.getId());
+        } catch (UserException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("residenceList", residenceList);
+
+        List<House> houseList = new ArrayList<>();
+        List<Visit> visitList = new ArrayList<>();
+
+        for(Residence residence: residenceList){
+            List<House> houses;
+            try{
+                houses = houseDAO.getHouseWithResidenceId(residence.getId());
+            } catch (HouseException e) {
+                throw new RuntimeException(e);
+            }
+
+            for(House house: houses){
+                houseList.add(house);
+                List<Visit> visits;
+                try{
+                    visits = visitDAO.getVisitByHouseId(house.getId());
+                } catch (VisitException e) {
+                    throw new RuntimeException(e);
+                }
+
+                for(Visit v: visits)
+                    visitList.add(v);
+            }
+        }
+
+        List<Schedule> scheduleList;
+
+        try{
+            scheduleList = scheduleDAO.getWithVisitId();
+        } catch (ScheduleException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("scheduleList", scheduleList);
+
+        request.setAttribute("houseList", houseList);
+        request.setAttribute("visitList", visitList);
+        return "viewVisitBooking";
+
     }
 
 
