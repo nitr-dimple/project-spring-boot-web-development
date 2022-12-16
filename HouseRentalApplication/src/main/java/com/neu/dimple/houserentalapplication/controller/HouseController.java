@@ -4,6 +4,7 @@ import com.neu.dimple.houserentalapplication.dao.HouseDAO;
 import com.neu.dimple.houserentalapplication.dao.HousePhotoDAO;
 import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
 import com.neu.dimple.houserentalapplication.exceptions.HouseException;
+import com.neu.dimple.houserentalapplication.exceptions.HousePhotoException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.*;
 import com.neu.dimple.houserentalapplication.validator.HouseValidator;
@@ -204,6 +205,14 @@ public class HouseController {
         } catch (HouseException e) {
             System.out.println("Exception: " +e.getMessage());
         }
+
+        List<HousePhoto> housephotolist;
+        housephotolist = housePhotoDAO.getAllHousePhotoWithHouseId(houseDeleteId);
+
+        for(HousePhoto housePhoto: housephotolist){
+                housePhotoDAO.deleteHousePhoto(housePhoto.getId());
+        }
+
         status.setComplete();
         request.setAttribute("btnClicked", "View House");
 

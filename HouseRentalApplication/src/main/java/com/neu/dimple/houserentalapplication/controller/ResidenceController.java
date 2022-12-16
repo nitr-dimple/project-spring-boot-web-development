@@ -1,10 +1,13 @@
 package com.neu.dimple.houserentalapplication.controller;
 
+import com.neu.dimple.houserentalapplication.dao.HouseDAO;
 import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
 import com.neu.dimple.houserentalapplication.dao.ResidencePhotoDAO;
+import com.neu.dimple.houserentalapplication.exceptions.HouseException;
 import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.ResidencePhotoException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
+import com.neu.dimple.houserentalapplication.pojo.House;
 import com.neu.dimple.houserentalapplication.pojo.Residence;
 import com.neu.dimple.houserentalapplication.pojo.ResidencePhoto;
 import com.neu.dimple.houserentalapplication.pojo.User;
@@ -42,6 +45,9 @@ public class ResidenceController {
 
     @Autowired
     ResidencePhotoDAO residencePhotoDAO;
+
+    @Autowired
+    HouseDAO houseDAO;
 
     @GetMapping("/user/addResidence.htm")
     public String handleGet(ModelMap model, Residence residence, HttpServletRequest request){
@@ -134,6 +140,38 @@ public class ResidenceController {
         } catch (ResidenceException e) {
             System.out.println("Exception: " +e.getMessage());
         }
+
+        List<ResidencePhoto> residencephotos;
+        try{
+            residencephotos = residencePhotoDAO.getAllResidencePhotoWithResidenceId(residenceDeleteId);
+        } catch (UserException e) {
+            throw new RuntimeException(e);
+        }
+
+        for(ResidencePhoto rsp: residencephotos){
+            try{
+                residencePhotoDAO.deleteResidencePhoto(rsp.getId());
+            } catch (ResidenceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        List<House> houseDeleted;
+        try{
+            houseDeleted = houseDAO.getHouseWithResidenceId(residenceDeleteId);
+        } catch (HouseException e) {
+            throw new RuntimeException(e);
+        }
+
+        for(House hs: houseDeleted){
+            try{
+                houseDAO.deleteHouse(hs.getId());
+            } catch (HouseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
         request.setAttribute("btnClicked", "View Residence");
 
         List<Residence> residenceList;
