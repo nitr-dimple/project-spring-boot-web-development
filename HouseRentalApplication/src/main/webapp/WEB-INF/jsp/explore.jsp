@@ -64,7 +64,7 @@
                   </div>
                 </form>
 
-                <form method="POST" class="form-horizontal" action="${pageContext.request.contextPath}/user/bookHouse.htm">
+                <form method="GET" class="form-horizontal" action="${pageContext.request.contextPath}/user/bookHouse.htm">
                   <div class="col-xs-2 text-center"  style="padding-top: 4px">
                     <input type="hidden" name="visitHouseId" value="${house.getId()}">
                     <input type="submit" value="Book" class="btn btn-primary" name="Book">

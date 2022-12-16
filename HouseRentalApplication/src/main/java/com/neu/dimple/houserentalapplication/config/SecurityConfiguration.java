@@ -48,11 +48,11 @@ public class SecurityConfiguration {
                         "/user/viewResidence.htm", "/user/deleteResidence.htm", "/user/updateResidence.htm",
                         "/user/addResidencePhoto.htm", "/user/deleteResidencePhoto.htm", "/user/viewPost.htm",
                         "/user/viewVisitBooking.htm", "/user/viewVisits.htm","/user/markVisitComplete.htm",
-                        "/user/scheduleVisitTour.htm"
+                        "/user/scheduleVisitTour.htm","/user/viewBooking.htm", "/user/updateBookingStatus.htm"
                 )
                 .hasAnyAuthority("owner", "admin")
                 .antMatchers("/user/viewUser.htm", "/user/updateUser.htm", "/user/deleteUser.htm",
-                        "/user/visitHouse.htm", "/user/viewYourVisits.htm")
+                        "/user/visitHouse.htm", "/user/viewYourVisits.htm", "/user/bookHouse.htm")
                 .hasAnyAuthority("owner", "admin", "seeker")
                 .antMatchers("/", "/images/**", "/user/explore.htm", "/user/add.htm", "/user/verifyUserEmail/*")
                 .permitAll()

@@ -19,7 +19,7 @@
         <mapping class="com.neu.dimple.houserentalapplication.pojo.UserEmailToken" />
         <mapping class="com.neu.dimple.houserentalapplication.pojo.Visit" />
         <mapping class="com.neu.dimple.houserentalapplication.pojo.Schedule" />
-
+        <mapping class="com.neu.dimple.houserentalapplication.pojo.BookHouse" />
 
     </session-factory>
 </hibernate-configuration>

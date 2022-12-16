@@ -14,21 +14,9 @@
         <input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="View Visits" name="btnClicked"/>
       </form>
 
-      <form method="post" action="${pageContext.request.contextPath}/user/viewBooking.htm">
+      <form method="get" action="${pageContext.request.contextPath}/user/viewBooking.htm">
         <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="View Booking" name="btnClicked"/></h2>
       </form>
-
-<%--      <form method="post" action="${pageContext.request.contextPath}/user/viewHouse.htm">--%>
-<%--        <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="View House" name="btnClicked"/></h2>--%>
-<%--      </form>--%>
-
-<%--      <form method="post" action="${pageContext.request.contextPath}/user/addPost.htm">--%>
-<%--        <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="Add House Photo" name="btnClicked"/></h2>--%>
-<%--      </form>--%>
-
-<%--      <form method="post" action="${pageContext.request.contextPath}/user/viewPost.htm">--%>
-<%--        <h2><input class="btn btn-lg" style="background-color: black; color: white; height: 50px; width: 200px" type="submit" value="View Post" name="btnClicked"/></h2>--%>
-<%--      </form>--%>
 
     </div>
 
@@ -47,41 +35,11 @@
           <jsp:include page="scheduleVisitTour.jsp" />
         </c:if>
 
+        <%--        If clicked on View Booking     --%>
+        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('View Booking')}">
+          <jsp:include page="viewBooking.jsp" />
+        </c:if>
 
-<%--        &lt;%&ndash;        If clicked on update Residence      &ndash;%&gt;--%>
-<%--        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Update Residence')}">--%>
-<%--          <jsp:include page="updateResidence.jsp" />--%>
-<%--        </c:if>--%>
-
-<%--        &lt;%&ndash;        If click on Add Residence Photos   &ndash;%&gt;--%>
-<%--        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Add Residence Photo')}">--%>
-<%--          <jsp:include page="addResidencePhoto.jsp" />--%>
-<%--        </c:if>--%>
-
-<%--        &lt;%&ndash;        If clicked on View House      &ndash;%&gt;--%>
-<%--        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('View House')}">--%>
-<%--          <jsp:include page="viewHouse.jsp" />--%>
-<%--        </c:if>--%>
-
-<%--        &lt;%&ndash;        If click on Add House                               &ndash;%&gt;--%>
-<%--        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Add House')}">--%>
-<%--          <jsp:include page="addHouse.jsp" />--%>
-<%--        </c:if>--%>
-
-<%--        &lt;%&ndash;        If clicked on update House      &ndash;%&gt;--%>
-<%--        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Update House')}">--%>
-<%--          <jsp:include page="updateHouse.jsp" />--%>
-<%--        </c:if>--%>
-
-<%--        &lt;%&ndash;        If click on Add House Photos            &ndash;%&gt;--%>
-<%--        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('Add House Photo')}">--%>
-<%--          <jsp:include page="addHousePhoto.jsp" />--%>
-<%--        </c:if>--%>
-
-<%--        &lt;%&ndash;        If click on Add House Photos            &ndash;%&gt;--%>
-<%--        <c:if test="${requestScope['btnClicked'] != null && requestScope['btnClicked'].equals('View Post')}">--%>
-<%--          <jsp:include page="viewPost.jsp" />--%>
-<%--        </c:if>--%>
 
       </div>
 

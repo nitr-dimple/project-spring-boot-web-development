@@ -31,6 +31,7 @@
             <li class="nav-item"><a href="${pageContext.request.contextPath}/user/viewVisitBooking.htm">Visiting/Booking</a></li>
           </c:if>
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/viewYourVisits.htm">Your visits</a></li>
+          <li class="nav-item"><a href="${pageContext.request.contextPath}/user/viewYourBooking.htm">Your Booking</a></li>
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/logout.htm">Logout</a></li>
         </c:if>
         <c:if test="${sessionScope['username'] == null}" >
