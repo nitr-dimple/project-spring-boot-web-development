@@ -30,7 +30,6 @@
             <c:if test="${bookHouse.getHouseId() eq house.getId()}">
               <c:forEach var="user" items="${requestScope['userList']}">
                 <c:if test="${user.getId() eq bookHouse.getUserId()}">
-
                   <div class="form-group" style=" border: 1px solid black; margin-left: 30px; margin-right: 15px;">
                     <div class="col-xs-6" style="padding-top: 6px; padding-left: 20px;">
                       Name: ${user.getFullname()} <br/>

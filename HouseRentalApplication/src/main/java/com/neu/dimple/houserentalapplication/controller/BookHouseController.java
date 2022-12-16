@@ -6,6 +6,7 @@ import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
 import com.neu.dimple.houserentalapplication.dao.UserDAO;
 import com.neu.dimple.houserentalapplication.exceptions.BookHouseException;
 import com.neu.dimple.houserentalapplication.exceptions.HouseException;
+import com.neu.dimple.houserentalapplication.exceptions.ResidenceException;
 import com.neu.dimple.houserentalapplication.exceptions.UserException;
 import com.neu.dimple.houserentalapplication.pojo.BookHouse;
 import com.neu.dimple.houserentalapplication.pojo.House;
@@ -83,7 +84,39 @@ public class BookHouseController {
         return "confirmHouseBooking";
     }
 
-//    @GetMapping("/user/viewYourBooking.htm")
+    @GetMapping("/user/viewYourBooking.htm")
+    public String handleGetViewYourBooking(HttpSession session, HttpServletRequest request){
+        logger.info("Reached: GET /user/viewYourBooking.htm ");
+        User user = (User) session.getAttribute("username");
+
+        List<Residence> residenceList;
+        try{
+            residenceList = residenceDAO.get();
+        } catch (ResidenceException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("residenceList", residenceList);
+
+        List<House> houseList;
+        try{
+            houseList = houseDAO.get();
+        } catch (HouseException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("houseList", houseList);
+
+
+        List<BookHouse> bookHouseList;
+        try{
+            bookHouseList = bookHouseDAO.getBookHouseWithUserId(user.getId());
+        } catch (BookHouseException e) {
+            throw new RuntimeException(e);
+        }
+        logger.info("size of bookHouseList " + bookHouseList.size() );
+        request.setAttribute("bookHouseList", bookHouseList);
+        return "viewUserBooking";
+
+    }
 
     @GetMapping("/user/viewBooking.htm")
     public String handlerViewBooking(HttpServletRequest request, HttpSession session){
@@ -126,15 +159,14 @@ public class BookHouseController {
 
                 for(BookHouse bh: bookHouses){
                     bookHouseList.add(bh);
-                    User user1;
-                    try{
-                        user1 = userDAO.getUser(bh.getUserId());
-                    } catch (UserException e) {
-                        throw new RuntimeException(e);
-                    }
-                    userList.add(user1);
                 }
             }
+        }
+
+        try{
+            userList = userDAO.getUserList();
+        } catch (UserException e) {
+            throw new RuntimeException(e);
         }
         request.setAttribute("houseList", houseList);
         request.setAttribute("bookHouseList", bookHouseList);
@@ -205,15 +237,14 @@ public class BookHouseController {
 
                 for(BookHouse bh: bookHouses){
                     bookHouseList.add(bh);
-                    User user1;
-                    try{
-                        user1 = userDAO.getUser(bh.getUserId());
-                    } catch (UserException e) {
-                        throw new RuntimeException(e);
-                    }
-                    userList.add(user1);
                 }
             }
+        }
+
+        try{
+            userList = userDAO.getUserList();
+        } catch (UserException e) {
+            throw new RuntimeException(e);
         }
         request.setAttribute("houseList", houseList);
         request.setAttribute("bookHouseList", bookHouseList);

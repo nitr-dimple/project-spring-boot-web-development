@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -32,6 +33,20 @@ public class UserDAO extends DAO {
         } catch (HibernateException e) {
             rollback();
             throw new UserException("Could not find user " + id, e);
+        }
+    }
+
+    public List<User> getUserList() throws UserException {
+        try{
+            begin();
+            Query q = getSession().createQuery("from User");
+            List<User> userList = q.list();
+            commit();
+            close();
+            return userList;
+        }catch (HibernateException e){
+            rollback();
+            throw new UserException("Can not list all the users " + e.getMessage());
         }
     }
 

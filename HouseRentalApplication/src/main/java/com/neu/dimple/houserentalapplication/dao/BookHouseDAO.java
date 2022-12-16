@@ -44,6 +44,21 @@ public class BookHouseDAO extends  DAO{
         }
     }
 
+    public List<BookHouse> getBookHouseWithUserId(UUID id) throws BookHouseException {
+        try{
+            begin();
+            Query q = getSession().createQuery(" from BookHouse where userId = : id");
+            q.setParameter("id", id);
+            List<BookHouse> bookHouseList = q.list();
+            commit();
+            close();
+            return bookHouseList;
+        }catch (HibernateException e){
+            rollback();
+            throw new BookHouseException("Error while fetching booked house detail using userId: " + id);
+        }
+    }
+
     public BookHouse get(UUID id) throws BookHouseException{
         try{
             begin();
