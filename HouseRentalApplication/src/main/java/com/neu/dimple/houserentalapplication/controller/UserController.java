@@ -158,4 +158,51 @@ public class UserController {
         return "deleteUserSuccessView";
     }
 
+    @GetMapping("/user/updateUserPassword.htm")
+    public String handleUpdateUserPassword(){
+        logger.info("Reached: GET /user/updateUserPassword.htm");
+
+        return "userUpdatePassword";
+    }
+
+    @PostMapping("/user/updateUserPassword.htm")
+    public String handlePostUpdatePassword(HttpSession session, HttpServletRequest request){
+        User user = (User) session.getAttribute("username");
+
+        String oldpassword = request.getParameter("oldpassword");
+        String newpassword = request.getParameter("newpassword");
+        String confirmpassword = request.getParameter("confirmpassword");
+
+
+        if(!newpassword.equals(confirmpassword)){
+            request.setAttribute("newpassword-confirmpassword-error", "New password and confirmpassword does not match");
+            return "userUpdatePassword";
+        }
+
+
+        logger.info("entered password: " + passwordEncoder.encode(oldpassword));
+        logger.info("user password: " + user.getPassword());
+
+        if(!passwordEncoder.matches(oldpassword, user.getPassword())){
+            request.setAttribute("oldpassword-error", "Wrong Old Password");
+            return "userUpdatePassword";
+        }
+
+        user.setPassword(passwordEncoder.encode(newpassword));
+        try {
+            userDao.update(user);
+        }
+        catch(UserException e) {
+            System.out.println("Exception: " +e.getMessage());
+        }
+
+        request.setAttribute("password-update-success", "Successfully updated password, Please login with new password");
+        SecurityContextHolder.clearContext();
+        if(session != null) {
+            session.invalidate();
+        }
+        return "welcome";
+
+    }
+
 }

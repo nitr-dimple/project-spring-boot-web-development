@@ -24,7 +24,7 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="${pageContext.request.contextPath}/">Home</a></li>
         <li class="nav-item"><a  href="${pageContext.request.contextPath}/user/explore.htm">Explore</a></li>
-        <c:if test="${sessionScope['username'] != null}" >
+        <c:if test="${param.error == null && sessionScope['username'] != null}" >
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/viewUser.htm"> <c:out value="${sessionScope['username'].getFullname()}"></c:out> </a></li>
           <c:if test="${sessionScope['username'].getUsertype().equals('owner')}">
             <li class="nav-item"><a href="${pageContext.request.contextPath}/user/addPost.htm">Add Post</a></li>
@@ -34,7 +34,7 @@
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/viewYourBooking.htm">Your Booking</a></li>
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/logout.htm">Logout</a></li>
         </c:if>
-        <c:if test="${sessionScope['username'] == null}" >
+        <c:if test="${param.error != null || sessionScope['username'] == null}" >
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/login.htm">Login</a></li>
           <li class="nav-item"><a href="${pageContext.request.contextPath}/user/add.htm">Register</a></li>
         </c:if>

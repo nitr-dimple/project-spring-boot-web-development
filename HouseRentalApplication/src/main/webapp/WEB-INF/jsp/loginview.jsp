@@ -45,6 +45,18 @@
                 <br/>
             </c:if>
 
+            <c:if test="${ requestScope['password-update-success'] != null}">
+                <div class="form-group">
+                    <div class="col-xs-3 text-right pd-2">
+                    </div>
+                    <div class="col-xs-9" style="width: 50%">
+                        <font color="red"><c:out value="${ requestScope['password-update-success']}"> </c:out> </font>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            </c:if>
+
             <c:if test="${ requestScope['authentication-success'] != null}">
                 <div class="form-group">
                     <div class="col-xs-3 text-right pd-2">

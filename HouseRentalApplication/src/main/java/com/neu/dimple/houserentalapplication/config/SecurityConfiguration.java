@@ -52,7 +52,7 @@ public class SecurityConfiguration {
                 )
                 .hasAnyAuthority("owner", "admin")
                 .antMatchers("/user/viewUser.htm", "/user/updateUser.htm", "/user/deleteUser.htm",
-                        "/user/visitHouse.htm", "/user/viewYourVisits.htm", "/user/bookHouse.htm", "/user/viewYourBooking.htm")
+                        "/user/visitHouse.htm", "/user/viewYourVisits.htm", "/user/bookHouse.htm", "/user/viewYourBooking.htm", "/user/updateUserPassword.htm")
                 .hasAnyAuthority("owner", "admin", "seeker")
                 .antMatchers("/", "/images/**", "/user/explore.htm", "/user/add.htm", "/user/verifyUserEmail/*")
                 .permitAll()

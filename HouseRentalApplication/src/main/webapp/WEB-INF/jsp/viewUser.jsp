@@ -32,12 +32,17 @@
         </div>
 
         <div class="form-group" >
-          <div class="col-xs-3" style="padding-top: 6px; padding-left: 20px;">
+          <div class="col-xs-2" style="padding-top: 6px; padding-left: 20px;">
             <form method="GET" class="" action="${pageContext.request.contextPath}/user/updateUser.htm">
               <input type="submit" value="Update Details" class="btn btn-primary" name="updateUserDetails">
             </form>
           </div>
-          <div class="col-xs-3" style="padding-top: 6px; padding-left: 20px;">
+          <div class="col-xs-2" style="padding-top: 6px; padding-left: 20px;">
+            <form method="GET" class="" action="${pageContext.request.contextPath}/user/updateUserPassword.htm">
+              <input type="submit" value="Update Password" class="btn btn-primary" name="updateUserPassword">
+            </form>
+          </div>
+          <div class="col-xs-2" style="padding-top: 6px; padding-left: 20px;">
             <form method="POST" class="" action="${pageContext.request.contextPath}/user/deleteUser.htm">
               <input type="submit" value="Delete Account" class="btn btn-primary" name="deleteUser">
             </form>
