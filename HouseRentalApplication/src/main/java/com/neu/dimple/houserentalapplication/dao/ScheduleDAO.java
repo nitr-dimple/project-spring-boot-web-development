@@ -32,7 +32,7 @@ public class ScheduleDAO extends  DAO{
         }
     }
 
-    public List<Schedule> getWithVisitId() throws ScheduleException{
+    public List<Schedule> get() throws ScheduleException{
         try{
             begin();
             Query q = getSession().createQuery("from Schedule");

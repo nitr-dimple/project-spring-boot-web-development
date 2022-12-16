@@ -4,10 +4,7 @@ import com.neu.dimple.houserentalapplication.dao.HouseDAO;
 import com.neu.dimple.houserentalapplication.dao.ResidenceDAO;
 import com.neu.dimple.houserentalapplication.dao.ScheduleDAO;
 import com.neu.dimple.houserentalapplication.dao.VisitDAO;
-import com.neu.dimple.houserentalapplication.exceptions.HouseException;
-import com.neu.dimple.houserentalapplication.exceptions.ScheduleException;
-import com.neu.dimple.houserentalapplication.exceptions.UserException;
-import com.neu.dimple.houserentalapplication.exceptions.VisitException;
+import com.neu.dimple.houserentalapplication.exceptions.*;
 import com.neu.dimple.houserentalapplication.pojo.*;
 import com.neu.dimple.houserentalapplication.validator.ScheduleValidator;
 import com.neu.dimple.houserentalapplication.validator.VisitorValidator;
@@ -148,7 +145,7 @@ public class VisitController {
         List<Schedule> scheduleList;
 
         try{
-            scheduleList = scheduleDAO.getWithVisitId();
+            scheduleList = scheduleDAO.get();
         } catch (ScheduleException e) {
             throw new RuntimeException(e);
         }
@@ -220,7 +217,7 @@ public class VisitController {
         }
 
         try{
-            scheduleList = scheduleDAO.getWithVisitId();
+            scheduleList = scheduleDAO.get();
         } catch (ScheduleException e) {
             throw new RuntimeException(e);
         }
@@ -328,7 +325,7 @@ public class VisitController {
         List<Schedule> scheduleList;
 
         try{
-            scheduleList = scheduleDAO.getWithVisitId();
+            scheduleList = scheduleDAO.get();
         } catch (ScheduleException e) {
             throw new RuntimeException(e);
         }
@@ -337,7 +334,46 @@ public class VisitController {
         request.setAttribute("houseList", houseList);
         request.setAttribute("visitList", visitList);
         return "viewVisitBooking";
+    }
 
+    @GetMapping("/user/viewYourVisits.htm")
+    public String handleGetViewYourVisits(HttpSession session, HttpServletRequest request){
+        logger.info("Reached: GET /user/viewYourVisits.htm");
+        User user  = (User) session.getAttribute("username");
+
+        List<Visit> visitList;
+        try {
+            visitList = visitDAO.getVistByUser(user.getId());
+        } catch (VisitException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("visitList", visitList);
+
+        List<Schedule> scheduleList;
+        try{
+            scheduleList = scheduleDAO.get();
+        } catch (ScheduleException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("scheduleList", scheduleList);
+
+        List<Residence> residenceList;
+        try{
+            residenceList = residenceDAO.get();
+        } catch (ResidenceException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("residenceList", residenceList);
+
+        List<House> houseList;
+        try{
+            houseList = houseDAO.get();
+        } catch (HouseException e) {
+            throw new RuntimeException(e);
+        }
+        request.setAttribute("houseList", houseList);
+
+        return "viewUserVisits";
     }
 
 

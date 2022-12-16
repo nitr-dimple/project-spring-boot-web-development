@@ -101,13 +101,15 @@ public class VisitDAO extends DAO{
         }
     }
 
-    public Visit get(UUID id) throws VisitException{
+    public List<Visit> getVistByUser(UUID id) throws VisitException{
         try{
             begin();
-            Visit visit = getSession().get(Visit.class, id);
+            Query q = getSession().createQuery("from Visit where userId = : id");
+            q.setParameter("id", id);
+            List<Visit> visitList = q.list();
             commit();
             close();
-            return visit;
+            return visitList;
         }catch (HibernateException e){
             rollback();
             throw new VisitException("Exception while fetching visit with id: " + id);
