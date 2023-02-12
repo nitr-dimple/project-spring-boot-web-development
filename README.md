@@ -102,35 +102,33 @@ House Rental web application allows to connect customer who are looking for hous
 18. House Owner Schedule Visit Appointment
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture19.png)
 
-19. House Owner Schedule Visit Appointment
+19. House Owner Can View all Visits and Scheduled Appoinments
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture20.png)
 
-20. House Owner Can View all Visits and Scheduled Appoinments
+20. House Owner can Mark Visit as Complete
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture21.png)
 
-21. House Owner can Mark Visit as Complete
+21. House Seeker can View Schedule Appointment for his/her Visit
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture22.png)
 
-22. House Seeker can View Schedule Appointment for his/her Visit
+22. House Booking From House Seeker
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture23.png)
 
-23. House Booking From House Seeker
+23. All Booking Details of House Seeker
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture24.png)![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture25.png)![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture26.png)
 
-24. All Booking Details of House Seeker
+24. House Owner can View House Booking
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture27.png)
 
-25. House Owner can View House Booking
+25. House Owner can accepts/deny House Booking
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture28.png)
 
-26. House Owner can accepts/deny House Booking
+26. House Seeker Can View Booking Status
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture29.png)
 
-27. House Seeker Can View Booking Status
+27. House Seeker/Owner CRUD on Account Details
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture30.png)
 
-28. House Seeker/Oner CRUD on Account Details
-![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture31.png)
 
 
 
