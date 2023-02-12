@@ -50,7 +50,12 @@ House Rental web application allows to connect customer who are looking for hous
 1. Home Page <br>
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture1.png)
 
-2. Registration Page
+2. Registration Page <br>
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture2.png)
+
+3. Email Verification <br>
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture3.png)![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture4.png)
+
 
 
 ## Language
