@@ -20,6 +20,7 @@ House Rental web application allows to connect customer who are looking for hous
 ### Backend
      1. Springboot 
      2. Hibernate
+     3. JAVA-11
 
 ### Database
      1. MySQL
@@ -56,10 +57,80 @@ House Rental web application allows to connect customer who are looking for hous
 3. Email Verification <br>
 ![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture3.png)![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture4.png)
 
+4. Login Page <br>
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture5.png)
 
+5. Login As House Owner
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture6.png)
 
-## Language
+6. Add Residence Details
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture7.png)
 
-1. `JAVA-11`
+7. Add Residence Photos
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture8.png)
+
+8. Residence CRUD Page
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture9.png)
+
+9. Add House Details
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture10.png)
+
+10. Add House Photo
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture11.png)
+
+11. House CRUD Page
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture12.png)
+
+12. Post House Advertisement
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture13.png)
+
+13. Login As House Seeker
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture14.png)
+
+14. House Explore Page
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture15.png)
+
+15. Visit Details
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture16.png)
+
+16. View User Visits from House Seeker Panel
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture17.png)
+
+17. House Owner View Visit Page
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture18.png)
+
+18. House Owner Schedule Visit Appointment
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture19.png)
+
+19. House Owner Schedule Visit Appointment
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture20.png)
+
+20. House Owner Can View all Visits and Scheduled Appoinments
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture21.png)
+
+21. House Owner can Mark Visit as Complete
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture22.png)
+
+22. House Seeker can View Schedule Appointment for his/her Visit
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture23.png)
+
+23. House Booking From House Seeker
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture24.png)![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture25.png)![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture26.png)
+
+24. All Booking Details of House Seeker
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture27.png)
+
+25. House Owner can View House Booking
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture28.png)
+
+26. House Owner can accepts/deny House Booking
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture29.png)
+
+27. House Seeker Can View Booking Status
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture30.png)
+
+28. House Seeker/Oner CRUD on Account Details
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/blob/main/images/Picture31.png)
+
 
 
