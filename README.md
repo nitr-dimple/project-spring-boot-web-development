@@ -47,8 +47,10 @@ House Rental web application allows to connect customer who are looking for hous
 
 ## Screenshots
 
-![alt text](https://github.com/nitr-dimple/Web-Designing-Project/blob/master/musicapp/assets/Model%20Diagram.png)
+1. Home Page
+![alt text](https://github.com/nitr-dimple/project-spring-boot-web-development/tree/main/images/Picture1.png)
 
+2. Registration Page
 
 
 ## Language
